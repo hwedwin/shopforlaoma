@@ -1,3 +1,30 @@
+<script type="text/javascript">
+var c=91;//倒计时90秒
+var t;
+  function timecounter(){
+    if (c==0) {
+      document.getElementById('sms').value = '获取手机验证码';
+      $("#sms").removeClass('disabled');
+      return;
+
+    }
+    t=setTimeout("timecounter()",1000);
+
+    c--;
+    document.getElementById('sms').value=c+'秒之后重新获取';
+
+
+    return c;
+  }
+  function sendsms(event){
+    //
+    // 此处接入短信平台
+    //
+      $("#sms").addClass('disabled');
+    t = timecounter();
+  }
+
+</script>
 <div><style>
 .klogin .column {
       max-width: 450px;
@@ -11,7 +38,7 @@
   	    <h2 class="ui image header">
   	      <img src="/admin/images/logo.png" class="tiny image">
   	      <div class="content">
-  	        登录到老猫
+  	        登录/注册到老猫
   	      </div>
   	    </h2>
 
@@ -21,15 +48,17 @@
         <div class="ui message">
 
         </div>
-  	      <div class="ui stacked segment">
+  	      <div class="ui stacked ">
 
             <div class="field">
               <div class="ui left icon input">
   	            <i class="phone icon"></i>
-                <input type="text" name="mobile" value="" placeholder='请输入您的手机号'>
-                <button type="button" class="ui teal button">发送手机验证码</button>
+                <input type="text" name="mobile" value="" placeholder='请输入您的手机号'><br/>
   	          </div>
         		</div>
+            <div class="field">
+              <input id="sms" onclick="sendsms(event)" type="button" value="获取手机验证码" class="ui teal button" />
+            </div>
   	        <div class="field">
   	          <div class="ui left icon input">
   	            <i class="note icon"></i>
