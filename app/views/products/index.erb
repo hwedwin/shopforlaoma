@@ -1,16 +1,19 @@
-
+<style media="screen">
+  .tab-view{
+    padding:1%;
+  }
+</style>
 
 <div class="ui divider">
 
 </div>
 <div class="ui centered container" style="text-align:center;">
-  <div class="ui segment">
     <div class="ui top attached tabular menu">
       <a class="active item" data-tab="first">汽车</a>
       <a class="item" data-tab="second">车险</a>
       <a class="item" data-tab="third">车品</a>
     </div>
-    <div class="ui bottom attached active tab segment" data-tab="first">
+    <div class="ui bottom attached active tab tab-view" data-tab="first">
       <div class="ui link cards">
         <div class="card">
           <a href="/products/1" class="image">
@@ -28,7 +31,7 @@
           <div class="extra content">
             <div class="ui two buttons">
               <div class="ui basic green button">分享</div>
-              <div class="ui basic red button">购买</div>
+              <a href="/cart" class="ui basic red button">加入购物车</a>
             </div>
           </div>
         </div>
@@ -48,7 +51,7 @@
           <div class="extra content">
             <div class="ui two buttons">
               <div class="ui basic green button">分享</div>
-              <div class="ui basic red button">购买</div>
+              <a href="/cart" class="ui basic red button">加入购物车</a>
             </div>
           </div>
         </div>
@@ -68,17 +71,17 @@
           <div class="extra content">
             <div class="ui two buttons">
               <div class="ui basic green button">分享</div>
-              <div class="ui basic red button">购买</div>
+              <a href="/cart" class="ui basic red button">加入购物车</a>
             </div>
           </div>
         </div>
       </div>
 
     </div>
-    <div class="ui bottom attached tab segment" data-tab="second">
+    <div class="ui bottom attached tab tab-view " data-tab="second">
       敬请期待
     </div>
-    <div class="ui bottom attached tab segment" data-tab="third">
+    <div class="ui bottom attached tab tab-view" data-tab="third">
       敬请期待
     </div>
     <script type="text/javascript">
@@ -86,7 +89,6 @@
       .tab()
     ;
     </script>
-  </div>
 
 
 </div>

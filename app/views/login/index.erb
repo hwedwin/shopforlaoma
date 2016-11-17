@@ -14,7 +14,8 @@
   	        登录到老猫
   	      </div>
   	    </h2>
-        <form class="ui large form" method="post">
+
+          <% form_tag url(:login, :index), :class=>"ui large form" do %>
 
 
         <div class="ui message">
@@ -42,7 +43,7 @@
 
   	      <div class="ui error message"></div>
 
-  	    </form>
+  	    <% end %>
 
   	  </div>
   	</div>

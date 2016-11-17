@@ -1,0 +1,31 @@
+<style media="screen">
+  .tab-view{
+    padding:1%;
+  }
+</style>
+<div class="ui container">
+  <div class="ui header">
+    <h1>个人资料</h1>
+  </div>
+  <div class="ui">
+    <div class="ui top attached tabular menu">
+      <a class="active item" data-tab="first">我的收入</a>
+      <a class="item" data-tab="second">我的订单</a>
+      <a class="item" data-tab="third">我的分享</a>
+    </div>
+    <div class="ui bottom attached active tab tab-view" data-tab="first">
+      First
+    </div>
+    <div class="ui bottom attached tab tab-view" data-tab="second">
+      Second
+    </div>
+    <div class="ui bottom attached tab tab-view" data-tab="third">
+      Third
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$('.menu .item')
+.tab()
+;
+</script>

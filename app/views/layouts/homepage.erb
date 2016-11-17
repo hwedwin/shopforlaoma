@@ -44,10 +44,7 @@
       display: none;
     }
 
-    .masthead.segment {
-      min-height: 700px;
-      padding: 1em 0em;
-    }
+  
     .masthead .logo.item img {
       margin-right: 1em;
     }
@@ -167,7 +164,13 @@
     <a  href="/rule" class="<%=@rule ? @rule : '' %> item">规则</a>
     <div class="right menu">
       <div class="item">
-        <a href="/login" class="ui button">登录/注册</a>
+        <% if !current_user %>
+          <a href="/login" class="ui button">登录/注册</a>
+        <% else %>
+          <a href="/personal" class="ui button">个人中心</a>
+          <a href="/login/out" class="ui button">登出</a>
+        <% end %>
+
       </div>
     </div>
   </div>
@@ -179,7 +182,13 @@
   <a href="/products" class="<%=@products ? @products : '' %> item">产品列表</a>
   <a href="/cart" class="<%=@cart ? @cart : '' %> item">购物车</a>
   <a  href="/rule" class="<%=@rule ? @rule : '' %> item">规则</a>
-  <a href="/login" class="item">登录／注册</a>
+
+  <% if !current_user %>
+    <a href="/login" class="item">登录／注册</a>
+  <% else %>
+    <a href="/personal" class="item">个人中心</a>
+    <a href="/login/out" class="item">登出</a>
+  <% end %>
 </div>
 
 
@@ -197,14 +206,29 @@
         <a href="/cart" class="<%=@cart ? @cart : '' %> item">购物车</a>
         <a  href="/rule" class="<%=@rule ? @rule : '' %> item">规则</a>
         <div class="right item">
-          <a href="/login" class="ui inverted button">登录/注册</a>
+          <% if !current_user %>
+            <a href="/login" class="ui inverted button">登录/注册</a>
+          <% else %>
+            <a href="/personal" class="ui inverted button">个人中心</a>
+            <a href="/login/out" class="ui inverted button">登出</a>
+          <% end %>
+
 
         </div>
       </div>
     </div>
+    <% if @index %>
+    <div class="ui text container">
+      <h1 class="ui inverted header">
+        分享，购买我们的产品
+      </h1>
+      <h2>让我们互惠共赢</h2>
+      <div class="ui huge primary button">立刻赚钱 <i class="right arrow icon"></i></div>
+    </div>
+    <% end %>
+    </div>
 
 <%= yield %>
-
 
   <div class="ui inverted vertical footer segment">
     <div class="ui container">

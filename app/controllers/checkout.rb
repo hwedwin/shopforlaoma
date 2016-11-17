@@ -1,4 +1,4 @@
-Myblog::App.controllers :login do
+Myblog::App.controllers :checkout do
   layout :homepage
 
   # get :index, :map => '/foo/bar' do
@@ -20,30 +20,8 @@ Myblog::App.controllers :login do
   #   'Hello world!'
   # end
 
-  before :index do
-    if current_user
-      redirect url(:personal, :index)
-    end
-  end
-
-  post :index do
-    @user = {
-      name: "username",
-      pass: "cryptedpass",
-      mobile: "18820965455"
-    }
-    set_current_user(@user)
-    redirect url(:personal, :index)
-  end
-
   get :index do
-
-    render 'login/index'
-  end
-
-  get :out do
-    destroy_current_user
-    redirect url(:login, :index)
+    render 'checkout/index'
   end
 
 end
