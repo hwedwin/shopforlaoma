@@ -46,4 +46,8 @@ Myblog::App.controllers :login do
     redirect url(:login, :index)
   end
 
+  get :term do
+    render 'login/term'
+  end
+
 end

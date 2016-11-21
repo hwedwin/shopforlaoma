@@ -24,6 +24,74 @@ var t;
     t = timecounter();
   }
 
+
+  $(document).ready(function(){
+    $('.ui.form').form({
+    on: 'submit',
+    fields: {
+      mobile: {
+        identifier: 'mobile',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : '手机号码没了吗？'
+          }
+        ]
+      },
+      smstext: {
+        identifier: 'smstext',
+        rules: [
+          {
+            type   : 'exactLength[4]',
+            prompt : '请输入至少4位验证码'
+          }
+        ]
+      },
+      gender: {
+        identifier: 'gender',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please select a gender'
+          }
+        ]
+      },
+      username: {
+        identifier: 'username',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter a username'
+          }
+        ]
+      },
+      password: {
+        identifier: 'password',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter a password'
+          },
+          {
+            type   : 'minLength[6]',
+            prompt : 'Your password must be at least {ruleValue} characters'
+          }
+        ]
+      },
+      terms: {
+        identifier: 'terms',
+        rules: [
+          {
+            type   : 'checked',
+            prompt : '你怎么能不同意条款！'
+          }
+        ]
+      }
+    }
+  })
+;
+  });
+
 </script>
 <div><style>
 .klogin .column {
@@ -63,11 +131,21 @@ var t;
   	          <div class="ui left icon input">
   	            <i class="note icon"></i>
   	            <input type="text" name="smstext" value="" placeholder='请输入您的手机验证码'>
-
   	          </div>
   	        </div>
+            <div class="inline field">
+              <div class="ui checkbox">
+                <input type="checkbox" name="terms">
+                <label>
+                  我同意
+                  <a href="/login/term">条款</a>
+                </label>
+              </div>
+            </div>
+            <div class="field">
+              <input type="submit" value="登录" class="ui fluid large basic red submit button">
+            </div>
 
-            <input type="submit" value="登录" class="ui fluid large basic red submit button">
   	      </div>
 
   	      <div class="ui error message"></div>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://semantic-ui.com/examples/homepage.html -->
+<html>
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <title>老猫后台管理</title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+
+	<!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+  <link rel="icon" type="image/png" href="/images/logoP.png">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="老猫"/>
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+  <meta name="msapplication-TileColor" content="#0e90d2">
+	<link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet">
+	<script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.js"></script>
+  <%= javascript_include_tag 'enquire.min' %>
+  <script>
+    $(document).ready(function(){
+			$("#sideMenu").show();
+			var show = true;
+			$("#menuTrigger").click(function(){
+				if (show) {
+					$("#sideMenu").hide();
+					show = false;
+				}else {
+					$("#sideMenu").show();
+					show=true;
+				}
+			});
+			// $('.ui.sticky')
+			//   .sticky({
+			//     context: '#mainPage'
+			//   })
+			// ;
+
+			enquire.register("screen and (max-width:951px)", {
+
+			    // OPTIONAL
+			    // If supplied, triggered when a media query matches.
+			    match : function() {
+						$("#sideMenu").hide();
+						$("#menuTrigger").unbind("click");
+						$("#menuTrigger").click(function(){
+							$('.ui.sidebar').sidebar('toggle');
+						});
+					},
+
+			});
+
+			$('.message .close')
+			  .on('click', function() {
+			    $(this)
+			      .closest('.message')
+			      .transition('fade')
+			    ;
+			  })
+			;
+
+    });
+  </script>
+</head>
+<body>
+	<div class="ui sidebar inverted vertical menu">
+		<div class="item">
+			<div class="ui icon input">
+				<input type="text" placeholder="搜索文章，留言，门店等等">
+				<i class="search link icon"></i>
+			</div>
+		</div>
+		<a href="/webadmin/" class="active item">
+			首页
+		</a>
+		<a class="item">
+			消息中心<div class="ui teal label">4</div>
+		</a>
+		<a class="item">
+			文章管理
+		</a>
+		<a class="item">
+			门店管理
+		</a>
+		<a class="item">
+			图片管理
+		</a>
+		<a class="item">
+			用户管理
+		</a>
+		<a class="item">
+			留言管理
+		</a>
+		<a href="/webadmin/admin" class="item">
+			管理系统用户
+		</a>
+		<a href="/webadmin/role" class="item">
+			角色及权限管理
+		</a>
+	</div>
+
+<div class="ui inverted segment pusher"  id="mainPage" style="position:relative;top:-20px;min-height:1000px;height:auto;">
+
+	<div class="ui large inverted pointing fixed top sticky menu" style="left:-10px;">
+		<a class="item small image">
+      这是LOGO
+		</a>
+		<a class="item" id="menuTrigger">
+			<i class="grid layout icon"></i>
+		</a>
+	  <div class="right menu">
+			<a class="item">
+		    消息
+				<div class="ui teal label">4</div>
+		  </a>
+	    <a class="ui item dropdown">
+	      管理员
+				<i class="dropdown icon"></i>
+	    </a>
+	  </div>
+	</div>
+	<br><br>
+	<div class="ui segment" style="min-height:900px;height:auto;">
+		<div class="ui stackable centered padding grid">
+			<div class="four wide center aligned padding column" id="sideMenu" >
+				<div class="ui inverted vertical pointing  menu" style="min-height: 700px;position:fixed">
+					<div class="item">
+						<div class="ui icon input">
+							<input type="text" placeholder="搜索文章，留言，门店等等">
+							<i class="search link icon"></i>
+						</div>
+					</div>
+					<a href="/webadmin/" class="<?php echo isset($IndexisActived)? $IndexisActived : ''; ?> item">
+						首页
+					</a>
+					<a class="item">
+						消息中心<div class="ui teal label">4</div>
+					</a>
+					<a class="item">
+						文章管理
+					</a>
+					<a class="item">
+						图片管理
+					</a>
+					<a class="item">
+						门店管理
+					</a>
+					<a class="item">
+						留言管理
+					</a>
+					<a class="item">
+						用户管理
+					</a>
+					<a href="/webadmin/admin" class="item">
+						管理系统用户
+					</a>
+					<a href="/webadmin/role" class="item">
+						角色及权限管理
+					</a>
+
+				</div>
+			</div>
+			<!-- main area -->
+			<div class="twelve wide  center aligned padding column">
+				<% if session[:flash_success] %>
+					<div class="ui positive message">
+						<i class="close icon"></i>
+						<strong>成功</strong>
+						<p>
+						<?php echo implode('</p><p>', e((array) Session::get_flash('success'))); ?>
+						</p>
+					</div>
+				<% end %>
+				<% if session[:flash_error] %>
+					<div class="ui negative message">
+						<i class="close icon"></i>
+						<strong>错误</strong>
+						<p>
+						<?php echo implode('</p><p>', e((array) Session::get_flash('error'))); ?>
+						</p>
+					</div>
+				<% end %>
+
+				<%= yield %>
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="ui inverted vertical footer segment">
+
+    <h5 class="ui horizontal divider mini text header" style="text-align:center; color: grey">
+      <i class="tag icon"></i>
+      版权声明
+    </h5>
+
+    <div class="ui mini inverted centered message" style="text-align:center; color: grey">
+      版权所有 ©2016-<?php echo date("Y")?> 成都市金莱蒂珠宝首饰有限公司 028-86928156&nbsp;&nbsp;川ICP备13022809号-1&nbsp;京公网安备11010102001976
+    </div>
+  </div>
+
+
+
+</div>
+
+
+</body>
+</html>
