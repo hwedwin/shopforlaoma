@@ -9,6 +9,23 @@ module Myblog
       render 'index'
     end
 
+
+    get :testrole do
+      @role = Role.new
+      @role.name = "afewaef"
+
+      @role.access_controllers=[{
+        access_name: 'post',
+        readable: true,
+        updatable: true
+        },{
+
+        }
+      ]
+      @role.save
+      @role.access_controllers.to_json
+    end
+
     ##
     # Caching support.
     #

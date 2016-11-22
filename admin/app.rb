@@ -34,6 +34,8 @@ module Myblog
     end
 
     access_control.roles_for :admin do |role|
+      role.project_module :access_controllers, '/access_controllers'
+      role.project_module :roles, '/roles'
       role.project_module :users, '/users'
       role.project_module :accounts, '/accounts'
     end

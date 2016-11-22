@@ -1,0 +1,155 @@
+<?php
+
+
+  function outputCheck($val){
+    if ($val == "1") {
+      return "&#10003;";
+    }
+    if ($val == "0") {
+      return "&#10005;";
+    }
+    return "&#10005;";
+  }
+
+
+?>
+<script type="text/javascript">
+
+</script>
+<style media="screen">
+  .cust{
+    width: 40% !important;
+    float: left!important;
+  }
+</style>
+
+<br>
+<div class="ui  container">
+  <div class="ui segment">
+    <div class="ui huge header">
+      角色管理
+    </div>
+    <form class="" action="/webadmin/role/deleteroles" method="post">
+      <div class="ui buttons">
+        <a href="/system/roles/new" class="ui green basic button">增加</a>
+        <button type="submit" class="ui basic red button">批量删除</button>
+        <input type="hidden" name="ids" value="" id="roles_delete">
+      </div>
+    </form>
+  </div>
+  <div class="ui segment">
+    <table class="ui celled table">
+      <thead>
+        <tr><th width="100">
+          全选／反选 <br>
+          <div class="ui master checkbox">
+            <input type="checkbox">
+            <label for=""></label>
+          </div>
+        </th>
+        <th>角色名</th>
+        <th>控制权</th>
+        <th>操作</th>
+      </tr></thead>
+      <tbody>
+        <% if @roles.length > 0 and @roles %>
+        <% @roles.each do |role| %>
+        <tr>
+          <td>
+            <div class="ui child checkbox" roleid="<?php echo $item->id; ?>">
+              <input type="checkbox" tabindex="0">
+              <label for=""></label>
+            </div>
+          </td>
+          <td><%= role.name %></td>
+          <td>
+
+            <div class="ui bulleted list">
+              <% role.access_controllers.each do |acl| %>
+              <% if acl.access_name=="post" %>
+              <div class="item cust">
+                <div class="">
+                  订单管理
+                </div>
+                <div class="list">
+                  <div class="item">新建：<%= outputCheck(acl.creatable) %></div>
+                  <div class="item">编辑：<%= outputCheck(acl.updatable) %></div>
+                  <div class="item">读取：<%= outputCheck(acl.readable) %></div>
+                  <div class="item">删除：<%= outputCheck(acl.deletable) %></div>
+                </div>
+              </div>
+              <% end %>
+              <% end %>
+              <div class="item cust">
+                <div class="">
+                  用户管理
+                </div>
+                <div class="list">
+                  <div class="item">新建：<?php echo outputCheck($aclList["picture"][0])?></div>
+                  <div class="item">编辑：<?php echo outputCheck($aclList["picture"][1])?></div>
+                  <div class="item">读取：<?php echo outputCheck($aclList["picture"][2])?></div>
+                  <div class="item">删除：<?php echo outputCheck($aclList["picture"][3])?></div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="ui">
+              <?php echo Html::anchor('/webadmin/role/edit/'.$item->id, '<i class="edit icon"></i> 编辑', array('class' => 'ui labeled icon button')); ?><br/>
+  						<?php echo Html::anchor('/webadmin/role/delete/'.$item->id, '<i class="remove icon"></i> 删除', array('class' => 'ui labeled icon button', 'onclick' => "return confirm('是否确认删除?')")); ?>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+        <% else %>
+          <p>暂时没有数据</p>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr><th colspan="4">
+          <?php echo $pagination; ?>
+        </th>
+      </tr></tfoot>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+$('.master.checkbox')
+.checkbox({
+  // check all children
+  onChecked: function() {
+    var
+      $childCheckbox  = $('.child.checkbox');
+    ;
+    $childCheckbox.checkbox('check');
+  },
+  // uncheck all children
+  onUnchecked: function() {
+    var
+      $childCheckbox  = $('.child.checkbox');
+    ;
+    $childCheckbox.checkbox('uncheck');
+  }
+})
+;
+var ids = '';
+$('.child.checkbox').each(function(){
+    var id = $(this).attr('roleid');
+    $(this).checkbox({
+      'onChecked': function(){
+        ids = ids+ id+ "|";
+        $("#roles_delete").val(ids);
+
+      },
+      'onUnchecked': function(){
+        var regx = new RegExp(id+'\\|');
+        ids = ids.replace(regx, '');
+
+        $("#roles_delete").val(ids);
+        if (ids=='') {
+          $('.master.checkbox').checkbox('uncheck');
+        }
+      }
+    });
+});
+</script>

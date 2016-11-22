@@ -1,0 +1,49 @@
+<% error = @access_controller.errors.include?(:access_name) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :access_name, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :access_name, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= error ? f.error_message_on(:access_name) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @access_controller.errors.include?(:creatable) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :creatable, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.check_box :creatable, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:creatable) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @access_controller.errors.include?(:updatable) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :updatable, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.check_box :updatable, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:updatable) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @access_controller.errors.include?(:readable) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :readable, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.check_box :readable, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:readable) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @access_controller.errors.include?(:deletable) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :deletable, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.check_box :deletable, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:deletable) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+
+
+<div class="form-actions">
+  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+  &nbsp;
+  <%= f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue' %>
+  &nbsp;
+  <%= link_to pat(:cancel), url(:access_controllers, :index), :class => 'btn btn-default' %>
+</div>
