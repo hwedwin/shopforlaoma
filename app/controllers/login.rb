@@ -27,12 +27,29 @@ Myblog::App.controllers :login do
   end
 
   post :index do
-    @user = {
-      name: "username",
-      pass: "cryptedpass",
-      mobile: "18820965455"
-    }
-    set_current_user(@user)
+    @message = ''
+    @user = User.where(mobile: params[:mobile]).first
+    if @user
+      if session[:valid]==params[:smstext]
+          set_current_user(@user)
+      else
+        @message = '验证码错误！'
+        redirect url(:personal, :index), :error => @message.html_safe+'<i class="close icon"></i>'.html_safe
+      end
+
+    else
+      if session[:valid]==params[:smstext]
+        @user = User.new
+        @user.mobile = params[:mobile];
+        @user.save
+        set_current_user(@user)
+      else
+        @message = '验证码错误！'
+        render 'login/index'
+        return nil
+      end
+
+    end
     redirect url(:personal, :index)
   end
 

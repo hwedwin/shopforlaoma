@@ -3,6 +3,7 @@ class Role
   include Mongoid::Timestamps # adds created_at and updated_at fields
 
   embeds_many :access_controllers
+  embedded_in :user
 
   # field <name>, :type => <type>, :default => <value>
   field :name, :type => String
