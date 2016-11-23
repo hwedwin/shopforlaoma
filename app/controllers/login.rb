@@ -63,6 +63,8 @@ Myblog::App.controllers :login do
       rec_num: mobile
       });
 
+    mobile.to_s
+
 
   end
 
