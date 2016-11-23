@@ -53,7 +53,7 @@ Myblog::App.controllers :login do
 
   get :sms do
     sms_param = {
-      "valid": rand(9999).to_s,
+      "valid": '3443',
       "name": "Simon"
     }
     mobile = params[:mobile]
