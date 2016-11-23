@@ -52,20 +52,24 @@ Myblog::App.controllers :login do
 
 
   get :sms do
+
+    session[:valid] = rand(9999).to_s
     sms_param = {
-      "valid": '3443',
-      "name": "Simon"
+      "valid": session[:valid],
+      "name": "用户"
     }
     mobile = params[:mobile]
-
-    post_sms('http://localhost:8080/sms.php',{
+    #调用php的sdk验证
+    result = post_sms('http://localhost:8080/sms.php',{
       sms_param: sms_param.to_json,
       rec_num: mobile
       });
 
-    mobile.to_s
 
+  end
 
+  get :removeSms do
+    session[:valid] = nil
   end
 
 end

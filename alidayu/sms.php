@@ -14,11 +14,11 @@
   $req->setExtend("123456");
   $req->setSmsType("normal");
   $req->setSmsFreeSignName("老猫商城");
-  // $req->setSmsParamString($_POST["sms_param"]);
-  $req->setSmsParam("{\"valid\":\"1234\",\"name\":\"Simon\"}");
-  // $req->setRecNum($_POST["rec_num"]);
-  $req->setRecNum('18781621212');
+  $req->setSmsParam($_POST["sms_param"]);
+  // $req->setSmsParam("{\"valid\":\"1234\",\"name\":\"Simon\"}");
+  $req->setRecNum($_POST["rec_num"]);
+  // $req->setRecNum('18781621212');
   $req->setSmsTemplateCode("SMS_27665222");
   $resp = $c->execute($req);
-  var_dump($resp);
+  echo json_encode($resp);
  ?>

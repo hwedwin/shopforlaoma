@@ -19,9 +19,37 @@ var t;
   function sendsms(event){
     //
     // 此处接入短信平台
-    //
-      $("#sms").addClass('disabled');
-    t = timecounter();
+    var phonereg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+    var mobile_number = $("#valid_mobile").val();
+
+
+    if (!phonereg.test(mobile_number)) {
+      alert('请输入正确的手机号！');
+      return ;
+    }
+
+    $.get('/login/sms', {mobile: mobile_number}, function(result){
+      var obj = JSON.parse(result);
+      if (obj.sub_code == 'isv.MOBILE_NUMBER_ILLEGAL') {
+        $.get('/login/removeSms');
+        alert('请输入正确的手机号！');
+        return
+      }
+      if (obj.sub_code == 'isv.BUSINESS_LIMIT_CONTROL') {
+        $.get('/login/removeSms');
+        alert('您的操作过于频繁，请稍后再试试！');
+        return
+      }
+      if (obj.result.success) {
+        alert('您的验证码已经发送至您的手机'+mobile_number+",请注意查收");
+        $("#sms").addClass('disabled');
+        t = timecounter();
+        return
+      }
+    });
+
+
+
   }
 
 
@@ -116,7 +144,7 @@ var t;
             <div class="field">
               <div class="ui left icon input">
   	            <i class="phone icon"></i>
-                <input type="text" name="mobile" value="" placeholder='请输入您的手机号'><br/>
+                <input type="text" id="valid_mobile" name="mobile" value="" placeholder='请输入您的手机号'><br/>
   	          </div>
         		</div>
             <div class="field">
@@ -130,7 +158,7 @@ var t;
   	        </div>
             <div class="inline field">
               <div class="ui checkbox">
-                <input type="checkbox" name="terms">
+                <input type="checkbox" name="terms" checked="checked">
                 <label>
                   我同意
                   <a href="/login/term">条款</a>
