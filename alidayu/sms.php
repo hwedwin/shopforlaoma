@@ -15,7 +15,7 @@
   $req->setSmsType("normal");
   $req->setSmsFreeSignName("老猫商城");
   // $req->setSmsParam($_POST["sms_param"]);
-  req.setSmsParamString("{\"valid\":\"1234\",\"name\":\"alidayu\"}");
+  $req.setSmsParamString("{\"valid\":\"1234\",\"name\":\"alidayu\"}");
   // $req->setRecNum($_POST["rec_num"]);
   $req->setRecNum('18781621212');
   $req->setSmsTemplateCode("SMS_27665222");
