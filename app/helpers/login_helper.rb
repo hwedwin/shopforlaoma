@@ -18,6 +18,7 @@ module Myblog
       def destroy_current_user
         session[:user] = nil
       end
+
     end
 
     helpers LoginHelper

@@ -22,6 +22,7 @@ gem 'bcrypt'
 gem 'erubis', '~> 2.7.0'
 gem 'mongoid', '>= 3.0.0'
 
+
 # Test requirements
 
 # Padrino Stable Gem
