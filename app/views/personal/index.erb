@@ -17,7 +17,8 @@
   <div class="ui header">
     <h1>个人资料</h1>
     <div class="ui text">
-      手机号：<%= current_user.mobile %>
+      手机号：<%= current_user.mobile %><br/>
+      账号收入： <%= @balance.amount %>
     </div>
   </div>
   <div class="ui divider">
@@ -25,7 +26,7 @@
   </div>
   <div class="ui">
     <div class="ui top attached tabular menu">
-      <a class="active item" data-tab="first">我的收入</a>
+      <a class="active item" data-tab="first">我的收支</a>
       <a class="item" data-tab="second">我的订单</a>
       <a class="item" data-tab="third">我的分享</a>
     </div>

@@ -82,7 +82,7 @@ DEPENDENCIES
   activesupport (>= 3.1)
   bcrypt
   erubis (~> 2.7.0)
-  mongoid (>= 3.0.0)
+  mongoid (>= 6.0.0)
   padrino (= 0.13.3.3)
   rake
 

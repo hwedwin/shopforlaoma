@@ -70,7 +70,7 @@ Myblog::App.controllers :login do
 
   get :sms do
 
-    session[:valid] = rand(9999).to_s
+    session[:valid] = rand(9).to_s+rand(9).to_s+rand(9).to_s+rand(9).to_s
     sms_param = {
       "valid": session[:valid],
       "name": "用户"

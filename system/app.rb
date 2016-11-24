@@ -10,6 +10,46 @@ module Myblog
     end
 
 
+    # get '/deletenodes' do
+    #   tt = ShareNode.all
+    #   tt.to_json
+    # end
+    # get '/share_node' do
+    #   node = ShareNode.new
+    #   node.is_root = 1
+    #   node.save
+    #   node.to_json
+    # end
+    #
+    # get '/allshare' do
+    #   ShareNode.all.to_json
+    # end
+    #
+    # get 'newbill' do
+    #
+    # end
+
+    get 'nodes' do
+      root = UserNode.new
+      child_one = root.child_user_nodes.build
+      child_one.save
+      child_two = root.child_user_nodes.build
+      child_two.save
+      root.save
+      root.to_json
+
+    end
+
+    get 'deletenodes' do
+      UserNode.all.to_json
+    end
+
+    get 'allnodes' do
+      # UserNode.find("58367deeb85af163102da139")
+      UserNode.all.to_json
+    end
+
+
     get :testrole do
       @role = Role.new
       @role.name = "afewaef"

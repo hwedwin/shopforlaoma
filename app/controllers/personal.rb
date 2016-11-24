@@ -29,6 +29,21 @@ Myblog::App.controllers :personal do
   end
 
   get :index do
+    if current_user.balance
+      @balance = current_user.balance
+    else
+      @balance = Balance.new
+      @balance.currency_big = 0;
+      @balance.currency_small = 0;
+      @balance.amount = '0.00';
+      current_user.balance = @balance;
+      @balance.save
+    end
+    if @balance.bills
+      @bills = @balance.bills
+    else
+      @bills = []
+    end
     render 'personal/index'
   end
 

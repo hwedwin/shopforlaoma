@@ -20,7 +20,7 @@ gem 'rake'
 gem 'activesupport', '>= 3.1'
 gem 'bcrypt'
 gem 'erubis', '~> 2.7.0'
-gem 'mongoid', '>= 3.0.0'
+gem 'mongoid', '>= 6.0.0'
 
 
 # Test requirements
