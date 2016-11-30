@@ -28,19 +28,24 @@ Myblog::App.controllers :share do
     @fuser_node = UserNode.find(session[:user_node])
     if current_user
       if @fuser_node.user == User.find(current_user.id)
-        return session[:user_node] = params[:id]
+        session[:user_node] = params[:id]
 
       else
         if current_user.user_node
-          return session[:user_node] = current_user.user_node.id
+          session[:user_node] = current_user.user_node.id
         else
           @new_user_node = UserNode.new
           @new_user_node.seller = @fuser_node.seller
           @new_user_node.fuser_node = @fuser_node.id
           @new_user_node.user_node = @fuser_node
+          if params[:product_id]
+            @new_user_node.product = Product.find(params[:product_id])
+          else
+            @new_user_node.product = Product.first
+          end
+
           @new_user_node.save
           session[:user_node] = @new_user_node.id
-          return session[:user_node]
 
         end
 
@@ -48,6 +53,8 @@ Myblog::App.controllers :share do
     else
       redirect url(:login, :index)
     end
+
+    render 'share/index'
 
   end
 
