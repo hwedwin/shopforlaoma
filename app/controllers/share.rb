@@ -36,12 +36,12 @@ Myblog::App.controllers :share do
         else
           @new_user_node = UserNode.new
           @new_user_node.seller = @fuser_node.seller
-          @new_user_node.fuser_node = @fuser_node.id
+          @new_user_node.parent_node = @fuser_node.id
           @new_user_node.user_node = @fuser_node
           if params[:product_id]
-            @new_user_node.product = Product.find(params[:product_id])
+            @new_user_node.product = Product.find(params[:product_id]).id
           else
-            @new_user_node.product = Product.first
+            @new_user_node.product = Product.first.id
           end
 
           @new_user_node.save
@@ -51,7 +51,12 @@ Myblog::App.controllers :share do
 
       end
     else
-      redirect url(:login, :index)
+      if params[:product_id]
+        redirect url(:products,:index, :id => params[:product_id])
+      else
+        redirect url(:products,:index)
+      end
+
     end
 
     render 'share/index'

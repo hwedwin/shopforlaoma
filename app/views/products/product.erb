@@ -66,9 +66,16 @@
       <div class="column"><%=@product.car.price_about_didi_lowest %>～
       <%=@product.car.price_about_didi_highest %></div>
     </div>
+    <div class="ui text">
+      <h3>这个商品分享自<%= UserNode.find(session[:user_node]).user.mobile %></h3>
+      <h4>再次分享并有人购买他与你都可以得佣金，详情看规则。</h4>
+      <div class="ui divider">
+
+      </div>
+    </div>
 
       <div class="ui two buttons">
-        <a href="/share/<%= get_current_node %>" class="ui basic green button">分享</a>
+        <a href="/share/<%= get_current_node %>?product_id=<%=@product.id %>" class="ui basic green button">分享</a>
         <a href="/cart" class="ui basic red button">意向购买</a>
       </div>
   </div>
