@@ -1,0 +1,119 @@
+
+<script type="text/javascript">
+
+</script>
+<style media="screen">
+  .cust{
+    width: 40% !important;
+    float: left!important;
+  }
+</style>
+
+<br>
+<div class="ui  container">
+  <div class="ui segment">
+    <div class="ui huge header">
+      图片管理
+    </div>
+    <form class="" action="/webadmin/picture/deletepictures" method="post">
+      <div class="ui buttons">
+        <a href="/system/pictures/new" class="ui green basic button">增加</a>
+        <button type="submit" class="ui basic red button">批量删除</button>
+        <input type="hidden" name="ids" value="" id="pictures_delete">
+      </div>
+    </form>
+  </div>
+  <div class="ui segment">
+    <table class="ui celled table">
+      <thead>
+        <tr><th width="100">
+          全选／反选 <br>
+          <div class="ui master checkbox">
+            <input type="checkbox">
+            <label for=""></label>
+          </div>
+        </th>
+        <th>图片名</th>
+        <th>展示</th>
+        <th>分类</th>
+        <th>操作</th>
+      </tr></thead>
+      <tbody>
+        <% if @pictures.length > 0 and @pictures %>
+        <% @pictures.each do |picture| %>
+        <tr>
+          <td>
+            <div class="ui child checkbox" pictureid="<%= picture.id %>">
+              <input type="checkbox" tabindex="0">
+              <label for=""></label>
+            </div>
+          </td>
+          <td><%= picture.name %></td>
+          <td>
+            <%= image_tag  picture.image.thumb.url %>
+          </td>
+          <td>
+            <%= picture.category.name if picture.category %>
+          </td>
+          <td>
+            <div class="ui">
+              <a class ='ui labeled icon button' href="/webadmin/picture/edit/"><i class="edit icon"></i> 编辑</a>
+              <br>
+              <a onclick="return confirm('是否确认删除?')" class ='ui labeled icon button' href="/webadmin/picture/edit/"><i class="remove icon"></i> 删除</a>
+
+            </div>
+          </td>
+        </tr>
+        <% end %>
+        <% else %>
+          <p>暂时没有数据</p>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr><th colspan="4">
+          <?php echo $pagination; ?>
+        </th>
+      </tr></tfoot>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+$('.master.checkbox')
+.checkbox({
+  // check all children
+  onChecked: function() {
+    var
+      $childCheckbox  = $('.child.checkbox');
+    ;
+    $childCheckbox.checkbox('check');
+  },
+  // uncheck all children
+  onUnchecked: function() {
+    var
+      $childCheckbox  = $('.child.checkbox');
+    ;
+    $childCheckbox.checkbox('uncheck');
+  }
+})
+;
+var ids = '';
+$('.child.checkbox').each(function(){
+    var id = $(this).attr('pictureid');
+    $(this).checkbox({
+      'onChecked': function(){
+        ids = ids+ id+ "|";
+        $("#pictures_delete").val(ids);
+
+      },
+      'onUnchecked': function(){
+        var regx = new RegExp(id+'\\|');
+        ids = ids.replace(regx, '');
+
+        $("#pictures_delete").val(ids);
+        if (ids=='') {
+          $('.master.checkbox').checkbox('uncheck');
+        }
+      }
+    });
+});
+</script>

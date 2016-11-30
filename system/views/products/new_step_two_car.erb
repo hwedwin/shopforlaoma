@@ -1,0 +1,129 @@
+<br>
+<div class="ui container">
+  <div class="ui header">
+    请先选择产品基本信息
+  </div>
+  <div class="ui segment">
+    <% form_tag url(:products, :create_car_info), :class=>"ui large form" do %>
+      <div class="field">
+        <label for="">车型号</label>
+        <%=input_tag :text, name: 'product_model_type',  value:  Product.get_new_product.product_model_type ? Product.get_new_product.product_model_type  : ""   %>
+      </div>
+      <div class="field">
+        <label for="">制造商（比如：东风雪铁龙）</label>
+        <%=input_tag :text, name: 'car[manufacturer]',  value: Product.get_new_product.car ? Product.get_new_product.car.manufacturer  : ""    %>
+      </div>
+      <div class="field">
+        <label for="">级别（比如：紧凑型车）</label>
+        <%=input_tag :text, name: 'car[level]',  value: Product.get_new_product.car ? Product.get_new_product.car.level  : ""  %>
+      </div>
+      <div class="field">
+        <label for="">发动机（比如：1.6L 117马力 L4）</label>
+        <%=input_tag :text, name: 'car[engine]',  value: Product.get_new_product.car ? Product.get_new_product.car.engine  : ""  %>
+      </div>
+      <div class="field">
+        <label for="">变速箱（比如：6挡手自一体）</label>
+        <%=input_tag :text, name: 'car[gearbox]',  value: Product.get_new_product.car ? Product.get_new_product.car.gearbox  : ""  %>
+      </div>
+      <div class="field">
+        <label for="">车体大小 （比如：4588*1800*1496）</label>
+        <%=input_tag :text, name: 'car[size]',  value: Product.get_new_product.car ? Product.get_new_product.car.size  : "" %>
+      </div>
+      <div class="field">
+        <label for="">车身结构 （比如：4门5座三厢车）</label>
+        <%=input_tag :text, name: 'car[structure]',  value: Product.get_new_product.car ? Product.get_new_product.car.structure  : "" %>
+      </div>
+      <div class="field">
+        <label for="">最高车速(km/h)</label>
+        <%=input_tag :text, name: 'car[highest_speed]',  value: Product.get_new_product.car ? Product.get_new_product.car.highest_speed  : "" %>
+      </div>
+      <div class="field">
+        <label for="">实测油耗(L/100km)</label>
+        <%=input_tag :text, name: 'car[fuel_consumption_tested]',  value: Product.get_new_product.car ? Product.get_new_product.car.fuel_consumption_tested  : "" %>
+      </div>
+      <div class="field">
+        <label for="">工信部综合油耗(L/100km)</label>
+        <%=input_tag :text, name: 'car[fuel_consumption_official]',  value: Product.get_new_product.car ? Product.get_new_product.car.fuel_consumption_official  : "" %>
+      </div>
+      <div class="field">
+        <label for="">整车质保（比如：三年或10万公里）</label>
+        <%=input_tag :text, name: 'car[assurance]',  value: Product.get_new_product.car ? Product.get_new_product.car.assurance  : "" %>
+      </div>
+      <div class="field">
+        <label for="">其他特性（比如：有冰箱啊，等等）</label>
+        <%=input_tag :text, name: 'car[other]',  value: Product.get_new_product.car ? Product.get_new_product.car.other  : "" %>
+      </div>
+      <div class="field">
+        <label for="">新车指导价格(万元)</label>
+        <%=input_tag :text, name: 'car[price_about_general_lowest]',  value: Product.get_new_product.car ? Product.get_new_product.car.price_about_general_lowest  : "", placeholder: "最低价" %>～
+        <%=input_tag :text, name: 'car[price_about_general_highest]',  value: Product.get_new_product.car ? Product.get_new_product.car.price_about_general_highest  : "", placeholder: "最高价" %>
+      </div>
+      <div class="field">
+        <label for="">滴滴车主指导价格（万元）</label>
+        <%=input_tag :text, name: 'car[price_about_didi_lowest]',  value: Product.get_new_product.car ? Product.get_new_product.car.price_about_didi_lowest  : "", placeholder: "最低价" %>～
+        <%=input_tag :text, name: 'car[price_about_didi_highest]',  value: Product.get_new_product.car ? Product.get_new_product.car.price_about_didi_highest  : "", placeholder: "最高价"%>
+      </div>
+
+      <div class="field">
+        <label>请选择汽车品牌</label>
+        <div name="brand" class="ui floating dropdown labeled search icon button cust-brand">
+            <i class="book icon"></i>
+            <span class="text"><%= Product.get_new_product.brand ? Product.get_new_product.brand  : "品牌" %></span>
+            <div class="menu">
+              <div class="item" data-value="雪铁龙">雪铁龙</div>
+              <div class="item" data-value="起亚">起亚</div>
+              <div class="item" data-value="东风">东风</div>
+            </div>
+          </div>
+          <input type="hidden" name="brand" value="<%= Product.get_new_product.brand ? Product.get_new_product.brand  : "" %>" id="cust-brand">
+      </div>
+      <div class="field">
+        <label>请选择汽车封面</label>
+        <div name="category" class="ui floating dropdown labeled search icon button category">
+            <i class="book icon"></i>
+            <span class="text">
+              <% if Product.get_new_product.cover %>
+                <img class="ui image" src="<%= Picture.find(Product.get_new_product.cover).image.thumb.url if Picture.where(id: session[:new_product].cover).exists? %>">
+                <%= Picture.find(Product.get_new_product.cover).name if Picture.where(id: Product.get_new_product.cover).exists? %>
+              <% else %>
+                封面
+              <% end %>
+            </span>
+            <div class="menu">
+              <% Picture.all.each do |picture| %>
+              <div class="item" data-value="<%= picture.id %>">
+                <img class="ui image" src="<%= picture.image.thumb.url %>">
+              <%= picture.name %></div>
+              <% end %>
+            </div>
+          </div>
+          <input type="hidden" name="cover" value="<%= Product.get_new_product.cover ? Product.get_new_product.cover  : "" %>" id="fcategory">
+
+      </div>
+      <div class="ui buttons">
+        <button type="submit" class="ui green basic button">下一步</button>
+        <a href="/system/products/new" class="ui basic red button">上一步</a>
+        <a href="/system/products" class="ui basic red button">取消</a>
+      </div>
+    <% end %>
+
+    <script type="text/javascript">
+    $('.ui.dropdown.category')
+      .dropdown({
+        allowAdditions: false,
+        onChange: function(value, text, $selectedItem) {
+          $("#fcategory").val(value);
+        }
+      })
+      ;
+      $('.ui.dropdown.cust-brand')
+        .dropdown({
+          allowAdditions: false,
+          onChange: function(value, text, $selectedItem) {
+            $("#cust-brand").val(value);
+          }
+        })
+        ;
+    </script>
+  </div>
+</div>

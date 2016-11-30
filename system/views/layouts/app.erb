@@ -8,7 +8,7 @@
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <title>老猫后台管理</title>
+  <title>老猫后台管理--<%= @title ? @title : ''%></title>
 
   <!-- Set render engine for 360 browser -->
   <meta name="renderer" content="webkit">
@@ -157,7 +157,7 @@
 					<a class="item">
 						文章管理
 					</a>
-					<a class="item">
+					<a href="/system/pictures/" class="item">
 						图片管理
 					</a>
 					<a class="item">
@@ -165,6 +165,12 @@
 					</a>
 					<a class="item">
 						留言管理
+					</a>
+					<a href="/system/categories/" class="item">
+						商品分类管理
+					</a>
+					<a href="/system/products/" class="item">
+						商品管理
 					</a>
 					<a class="item">
 						用户管理

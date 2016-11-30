@@ -4,6 +4,7 @@ class User
 
   embeds_many :roles
   has_one :balance
+  has_one :user_node
 
   # field <name>, :type => <type>, :default => <value>
   field :username, :type => String
@@ -12,6 +13,7 @@ class User
   field :mobile, :type => String
   field :email,            :type => String
   field :crypted_password, :type => String
+  field :is_seller, :type => String
 
   attr_accessor :password, :password_confirmation
 

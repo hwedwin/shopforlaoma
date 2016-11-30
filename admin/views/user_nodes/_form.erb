@@ -1,9 +1,25 @@
+<% error = @user_node.errors.include?(:user_node_id) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :user_node_id, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :user_node_id, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= error ? f.error_message_on(:user_node_id) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
 <% error = @user_node.errors.include?(:is_root) %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :is_root, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.check_box :is_root, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
+    <%= f.check_box :is_root, :class => 'form-control input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? f.error_message_on(:is_root) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @user_node.errors.include?(:parent_node) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :parent_node, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :parent_node, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:parent_node) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
 

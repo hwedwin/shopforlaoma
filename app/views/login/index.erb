@@ -30,6 +30,7 @@ var t;
 
     $.get('/login/sms', {mobile: mobile_number}, function(result){
       var obj = JSON.parse(result);
+      // console.log(result);
       if (obj.sub_code == 'isv.MOBILE_NUMBER_ILLEGAL') {
         $.get('/login/removeSms');
         alert('请输入正确的手机号！');

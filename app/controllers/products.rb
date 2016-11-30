@@ -22,12 +22,12 @@ Myblog::App.controllers :products do
   # end
 
   get :index do
-    @products = 'active'
+    @products = Product.all
     render 'products/index'
   end
 
   get :index, :with => :id do
-    @products = 'active'
+    @product = Product.find(params[:id])
     render 'products/product'
   end
 

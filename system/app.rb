@@ -30,41 +30,12 @@ module Myblog
     # end
 
     get 'nodes' do
-      root = UserNode.new
-      child_one = root.child_user_nodes.build
-      child_one.save
-      child_two = root.child_user_nodes.build
-      child_two.save
-      root.save
-      root.to_json
-
-    end
-
-    get 'deletenodes' do
-      UserNode.all.to_json
-    end
-
-    get 'allnodes' do
-      # UserNode.find("58367deeb85af163102da139")
-      UserNode.all.to_json
+      @user_node = UserNode.where(is_root: true).first
+      
+      @user_node.user_nodes.to_json
     end
 
 
-    get :testrole do
-      @role = Role.new
-      @role.name = "afewaef"
-
-      @role.access_controllers=[{
-        access_name: 'post',
-        readable: true,
-        updatable: true
-        },{
-
-        }
-      ]
-      @role.save
-      @role.access_controllers.to_json
-    end
 
     ##
     # Caching support.

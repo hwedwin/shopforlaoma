@@ -1,0 +1,50 @@
+<br>
+<div class="ui container">
+  <div class="ui header">
+    新建图片
+  </div>
+  <div class="ui segment">
+    <% form_tag url(:pictures, :create),:method => 'post', :enctype =>"multipart/form-data", :class=>"ui large form" do %>
+      <div class="field">
+        <div class="ui labeled input">
+          <div class="ui label">
+            上传图片
+          </div>
+          <%= input_tag :file, :name =>'picture[image]',  :value => '', multiple: true %>
+        </div>
+      </div>
+      <div class="field">
+        <label>图片名称</label>
+        <%= input_tag :text, :name =>'picture[name]',  :value => '', :placeholder => "图片名称"  %>
+      </div>
+      <div class="field">
+        <label>选择分类</label>
+        <div name="picture" class="ui floating dropdown labeled search icon button category">
+            <i class="book icon"></i>
+            <span class="text">选择上级分类</span>
+            <div class="menu">
+              <% Category.all.each do |cate| %>
+              <div class="item" data-value="<%= cate.id %>"><%= cate.name %></div>
+              <% end %>
+            </div>
+          </div>
+          <input type="hidden" name="picture[category]" value="" id="fcategory">
+      </div>
+      <div class="ui buttons">
+        <button type="submit" class="ui green basic button">保存</button>
+        <a href="/system/categories" class="ui basic red button">返回</a>
+      </div>
+    <% end %>
+
+    <script type="text/javascript">
+    $('.ui.dropdown.category')
+      .dropdown({
+        allowAdditions: false,
+        onChange: function(value, text, $selectedItem) {
+          $("#fcategory").val(value);
+        }
+      })
+      ;
+    </script>
+  </div>
+</div>

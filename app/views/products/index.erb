@@ -21,66 +21,31 @@
     </div>
     <div class="ui bottom attached active tab tab-view" data-tab="first">
       <div class="ui link cards">
-        <div class="card">
-          <a href="/products/1" class="image">
-            <img src="http://car1.autoimg.cn/upload/2013/4/8/u_201304080917124224122.jpg">
-          </a>
-          <div class="content">
-            <div class="header">Matt Giampietro</div>
-            <div class="meta">
-              <a>Friends</a>
+
+        <% @products.each do |product| %>
+          <div class="card">
+            <a  href="/products/<%= product.id %>" class="image">
+              <img src="<%= Picture.find(product.cover).image.url %>">
+            </a>
+            <div class="content">
+              <div class="header"><%= product.car.model_type %></div>
+              <div class="meta">
+                <a><%= product.brand %></a>
+              </div>
+              <div class="description">
+                <p>新手指导价：<span style="color:red;font-weight:bolder"><%=product.car.price_about_general_lowest %>~<%=product.car.price_about_general_highest %>万</span></p>
+                <p>滴滴车主俱乐部价：<span style="color:red;font-weight:bolder"><%=product.car.price_about_didi_lowest %>~<%=product.car.price_about_didi_highest %>万</span></p>
+              </div>
             </div>
-            <div class="description">
-              Matthew is an interior designer living in New York.
-            </div>
-          </div>
-          <div class="extra content">
-            <div class="ui two buttons">
-              <a href="/share/3" class="ui basic green button">分享</a>
-              <a href="/cart" class="ui basic red button">认购</a>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <a  href="/products/1" class="image">
-            <img src="http://car2.autoimg.cn/cardfs/product/g6/M10/ED/D9/u_autohomecar__wKjB0VekUEqAQqiWAAhLxUArrVE427.jpg">
-          </a>
-          <div class="content">
-            <div class="header">Molly</div>
-            <div class="meta">
-              <span class="date">Coworker</span>
-            </div>
-            <div class="description">
-              Molly is a personal assistant living in Paris.
+            <div class="extra content">
+              <div class="ui two buttons">
+                <a href="/share/<%= get_current_node %>" class="ui basic green button">分享</a>
+                <a href="/cart" class="ui basic red button">意向购买</a>
+              </div>
             </div>
           </div>
-          <div class="extra content">
-            <div class="ui two buttons">
-              <div class="ui basic green button">分享</div>
-              <a href="/cart" class="ui basic red button">认购</a>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <a  href="/products/1" class="image">
-            <img src="http://car3.autoimg.cn/cardfs/product/g22/M10/52/70/u_autohomecar__wKjBwVcpxz6ALqM7AAUnOlkWBbA482.jpg">
-          </a>
-          <div class="content">
-            <div class="header">Elyse</div>
-            <div class="meta">
-              <a>Coworker</a>
-            </div>
-            <div class="description">
-              Elyse is a copywriter working in New York.
-            </div>
-          </div>
-          <div class="extra content">
-            <div class="ui two buttons">
-              <div class="ui basic green button">分享</div>
-              <a href="/cart" class="ui basic red button">认购</a>
-            </div>
-          </div>
-        </div>
+        <%  end %>
+
       </div>
 
     </div>

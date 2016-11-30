@@ -1,0 +1,39 @@
+<br>
+<div class="ui container">
+  <div class="ui header">
+    请先选择产品类型
+  </div>
+  <div class="ui segment">
+    <% form_tag url(:products, :create_product_category), :class=>"ui large form" do %>
+
+      <div class="field">
+        <label>请选择商品的类型</label>
+        <div name="category" class="ui floating dropdown labeled search icon button category">
+            <i class="book icon"></i>
+            <span class="text"><%= Product.get_new_product.category ? Product.get_new_product.category.name  : "分类" %></span>
+            <div class="menu">
+              <% Category.all.each do |cate| %>
+              <div class="item" data-value="<%= cate.id %>"><%= cate.name %></div>
+              <% end %>
+            </div>
+          </div>
+          <input type="hidden" name="category" value="<%= Product.get_new_product.category ? Product.get_new_product.category.id  : "分类"  %>" id="fcategory">
+      </div>
+      <div class="ui buttons">
+        <button type="submit" class="ui green basic button">下一步</button>
+        <a href="/system/products" class="ui basic red button">返回</a>
+      </div>
+    <% end %>
+
+    <script type="text/javascript">
+    $('.ui.dropdown.category')
+      .dropdown({
+        allowAdditions: false,
+        onChange: function(value, text, $selectedItem) {
+          $("#fcategory").val(value);
+        }
+      })
+      ;
+    </script>
+  </div>
+</div>

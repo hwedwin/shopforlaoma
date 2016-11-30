@@ -2,6 +2,9 @@
 RACK_ENV = ENV['RACK_ENV'] ||= 'development' unless defined?(RACK_ENV)
 PADRINO_ROOT = File.expand_path('../..', __FILE__) unless defined?(PADRINO_ROOT)
 
+
+
+
 # Load our dependencies
 require 'bundler/setup'
 Bundler.require(:default, RACK_ENV)
@@ -43,6 +46,9 @@ Bundler.require(:default, RACK_ENV)
 # Dependencies from 'config' folder are NOT re-required on reload.
 #
 Padrino.dependency_paths.unshift Padrino.root('config/initializers/*.rb')
+
+require 'carrierwave/mongoid'
+CarrierWave.root = File.join(Padrino.root, "public")
 
 ##
 # Add your before (RE)load hooks here

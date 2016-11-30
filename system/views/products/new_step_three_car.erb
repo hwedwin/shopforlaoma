@@ -1,0 +1,73 @@
+  <h2><%= @title %></h2>
+<div class="ui divider">
+
+</div>
+<div class="ui container">
+  <div class="ui two column grid">
+    <div class="row">
+      <div class="column">代表图片（封面）</div>
+      <div class="column"><%=image_tag Picture.find(Product.get_new_product.cover).image.url %></div>
+    </div>
+  <div class="row">
+    <div class="column">品牌</div>
+    <div class="column"><%=Product.get_new_product.brand %></div>
+  </div>
+  <div class="row">
+    <div class="column">制造商</div>
+    <div class="column"><%=Product.get_new_product.car.manufacturer %></div>
+  </div>
+  <div class="row">
+    <div class="column">实测油耗(L/100km)</div>
+    <div class="column"><%=Product.get_new_product.car.fuel_consumption_tested %></div>
+  </div>
+  <div class="row">
+    <div class="column">工信部综合油耗(L/100km)</div>
+    <div class="column"><%=Product.get_new_product.car.fuel_consumption_official %></div>
+  </div>
+  <div class="row">
+    <div class="column">最高车速(km/h)</div>
+    <div class="column"><%=Product.get_new_product.car.highest_speed %></div>
+  </div>
+  <div class="row">
+    <div class="column">级别</div>
+    <div class="column"><%=Product.get_new_product.car.level %></div>
+  </div>
+  <div class="row">
+    <div class="column">变速箱</div>
+    <div class="column"><%=Product.get_new_product.car.gearbox %></div>
+  </div>
+  <div class="row">
+    <div class="column">长*高*宽</div>
+    <div class="column"><%=Product.get_new_product.car.size %></div>
+  </div>
+  <div class="row">
+    <div class="column">车身结构</div>
+    <div class="column"><%=Product.get_new_product.car.structure %></div>
+  </div>
+  <div class="row">
+    <div class="column">整车质保</div>
+    <div class="column"><%=Product.get_new_product.car.assurance %></div>
+  </div>
+  <div class="row">
+    <div class="column">新手指导价格（万元）</div>
+    <div class="column"><%=Product.get_new_product.car.price_about_general_lowest %>～
+    <%=Product.get_new_product.car.price_about_general_highest %></div>
+  </div>
+  <div class="row">
+    <div class="column">滴滴车主俱乐部指导价格（万元）</div>
+    <div class="column"><%=Product.get_new_product.car.price_about_didi_lowest %>～
+    <%=Product.get_new_product.car.price_about_didi_highest %></div>
+  </div>
+
+</div>
+<div class="ui container">
+  <div class="ui divider">
+
+  </div>
+  <div class="ui buttons">
+    <a href="/system/products/save_new_product_car_and_upload_more_pic" class="ui button basic green">确认并继续上传车辆图片</a>
+    <a href="/system/products/save_new_product_car" class="ui button basic blue">保存并且返回</a>
+    <a href="/system/products/new_step_two" class="ui button basic red">返回上一步继续编辑</a>
+  </div>
+</div>
+</div>

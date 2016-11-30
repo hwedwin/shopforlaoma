@@ -1,9 +1,13 @@
-class ShareNode
+class Category
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
 
   # field <name>, :type => <type>, :default => <value>
-  field :is_root, :type => Boolean
+  belongs_to :category, validate: false, dependent: :nullify, optional: true
+  has_many :categories
+  has_many :products
+  has_many :pictures
+  field :name, :type => String
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>

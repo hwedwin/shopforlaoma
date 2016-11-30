@@ -1,0 +1,42 @@
+<br>
+<div class="ui container">
+  <div class="ui header">
+    新建商品分类
+  </div>
+  <div class="ui segment">
+    <% form_tag url(:categories, :create), :class=>"ui large form" do %>
+      <div class="field">
+        <label>名称</label>
+        <%= input_tag :text, :name =>'category[name]',  :value => '', :placeholder => "分类名"  %>
+      </div>
+      <div class="field">
+        <label>上级分类</label>
+        <div name="category" class="ui floating dropdown labeled search icon button category">
+            <i class="book icon"></i>
+            <span class="text">选择上级分类</span>
+            <div class="menu">
+              <% Category.all.each do |cate| %>
+              <div class="item" data-value="<%= cate.id %>"><%= cate.name %></div>
+              <% end %>
+            </div>
+          </div>
+          <input type="hidden" name="category[category]" value="" id="fcategory">
+      </div>
+      <div class="ui buttons">
+        <button type="submit" class="ui green basic button">保存</button>
+        <a href="/system/categories" class="ui basic red button">返回</a>
+      </div>
+    <% end %>
+
+    <script type="text/javascript">
+    $('.ui.dropdown.category')
+      .dropdown({
+        allowAdditions: false,
+        onChange: function(value, text, $selectedItem) {
+          $("#fcategory").val(value);
+        }
+      })
+      ;
+    </script>
+  </div>
+</div>

@@ -38,7 +38,9 @@
         </th>
                 <th class=header> <%= mat(:user_node, :created_at) %></th>
                 <th class=header> <%= mat(:user_node, :updated_at) %></th>
+                <th class=header> <%= mat(:user_node, :user_node_id) %></th>
                 <th class=header> <%= mat(:user_node, :is_root) %></th>
+                <th class=header> <%= mat(:user_node, :parent_node) %></th>
                 <th class="header list-row-action-header"></th>
       </tr>
     </thead>
@@ -51,7 +53,9 @@
            </td>
           <td class=list-column> <%= time_ago_in_words user_node.created_at %></td>
           <td class=list-column> <%= time_ago_in_words user_node.updated_at %></td>
+          <td class=list-column> <%= user_node.user_node_id %> </td>
           <td class=list-column> <%= user_node.is_root %> </td>
+          <td class=list-column> <%= user_node.parent_node %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:user_nodes, :edit, :id => user_node.id), :rel => :tooltip, :title => "#{pat(:edit)} user_node", :class => 'list-row-action-wrapper-link' %>

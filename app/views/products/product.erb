@@ -8,17 +8,69 @@
 <div class="ui segment">
   <div class="ui main text container">
     <h2>产品详情</h2>
-      <img class="wireframe" src="http://semantic-ui.com/examples/assets/images/wireframe/media-paragraph.png">
-      <img class="wireframe" src="http://semantic-ui.com/examples/assets/images/wireframe/paragraph.png">
-      <img class="wireframe" src="http://semantic-ui.com/examples/assets/images/wireframe/paragraph.png">
-      <img class="wireframe" src="http://semantic-ui.com/examples/assets/images/wireframe/paragraph.png">
-      <img class="wireframe" src="http://semantic-ui.com/examples/assets/images/wireframe/paragraph.png">
-      <img class="wireframe" src="http://semantic-ui.com/examples/assets/images/wireframe/paragraph.png">
-      <img class="wireframe" src="http://semantic-ui.com/examples/assets/images/wireframe/paragraph.png">
+    <div class="ui divider">
+
+    </div>
+    <div class="ui two column grid">
+      <div class="row">
+        <div class="column">代表图片（封面）</div>
+        <div class="column"><%=image_tag Picture.find(@product.cover).image.url %></div>
+      </div>
+    <div class="row">
+      <div class="column">品牌</div>
+      <div class="column"><%=@product.brand %></div>
+    </div>
+    <div class="row">
+      <div class="column">制造商</div>
+      <div class="column"><%=@product.car.manufacturer %></div>
+    </div>
+    <div class="row">
+      <div class="column">实测油耗(L/100km)</div>
+      <div class="column"><%=@product.car.fuel_consumption_tested %></div>
+    </div>
+    <div class="row">
+      <div class="column">工信部综合油耗(L/100km)</div>
+      <div class="column"><%=@product.car.fuel_consumption_official %></div>
+    </div>
+    <div class="row">
+      <div class="column">最高车速(km/h)</div>
+      <div class="column"><%=@product.car.highest_speed %></div>
+    </div>
+    <div class="row">
+      <div class="column">级别</div>
+      <div class="column"><%=@product.car.level %></div>
+    </div>
+    <div class="row">
+      <div class="column">变速箱</div>
+      <div class="column"><%=@product.car.gearbox %></div>
+    </div>
+    <div class="row">
+      <div class="column">长*高*宽</div>
+      <div class="column"><%=@product.car.size %></div>
+    </div>
+    <div class="row">
+      <div class="column">车身结构</div>
+      <div class="column"><%=@product.car.structure %></div>
+    </div>
+    <div class="row">
+      <div class="column">整车质保</div>
+      <div class="column"><%=@product.car.assurance %></div>
+    </div>
+    <div class="row">
+      <div class="column">新手指导价格（万元）</div>
+      <div class="column"><%=@product.car.price_about_general_lowest %>～
+      <%=@product.car.price_about_general_highest %></div>
+    </div>
+    <div class="row">
+      <div class="column">滴滴车主俱乐部指导价格（万元）</div>
+      <div class="column"><%=@product.car.price_about_didi_lowest %>～
+      <%=@product.car.price_about_didi_highest %></div>
+    </div>
+
       <div class="ui two buttons">
-        <div class="ui basic green button">分享</div>
-        <a href="/cart" class="ui basic red button">加入购物车</a>
+        <a href="/share/<%= get_current_node %>" class="ui basic green button">分享</a>
+        <a href="/cart" class="ui basic red button">意向购买</a>
       </div>
   </div>
-
+<br/><br/><br/>
 </div>

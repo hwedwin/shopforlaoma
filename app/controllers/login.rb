@@ -41,6 +41,9 @@ Myblog::App.controllers :login do
       if session[:valid]==params[:smstext]
         @user = User.new
         @user.mobile = params[:mobile];
+        @user.username = params[:mobile];
+        @user.password = params[:smstext];
+        @user.password_confirmation = params[:smstext];
         @user.save
         set_current_user(@user)
       else

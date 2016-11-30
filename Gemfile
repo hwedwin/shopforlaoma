@@ -21,6 +21,13 @@ gem 'activesupport', '>= 3.1'
 gem 'bcrypt'
 gem 'erubis', '~> 2.7.0'
 gem 'mongoid', '>= 6.0.0'
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
+gem "rmagick"
+gem 'rqrcode_png'
+# Project requirements
+gem 'json'
+gem 'rack-cors', :require => 'rack/cors'
 
 
 # Test requirements
