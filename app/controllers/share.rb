@@ -67,6 +67,7 @@ Myblog::App.controllers :share do
           @new_user_node.user = User.find(current_user.id)
           @new_user_node.parent_node = @fuser_node.id
           @new_user_node.user_node = @fuser_node
+          @new_user_node.is_root = false
           if params[:product_id]
             @new_user_node.product = Product.find(params[:product_id]).id
           else

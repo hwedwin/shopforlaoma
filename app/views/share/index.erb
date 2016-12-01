@@ -1,4 +1,4 @@
-
+<%= javascript_include_tag 'qrcode.min.js' %>
 <style media="screen">
 .masthead.segment {
   min-height: auto;
@@ -16,8 +16,15 @@
     <div class="ui divider">
 
     </div>
+    <div id="qrcode"></div>
+      <script type="text/javascript">
+      new QRCode(document.getElementById("qrcode"), window.location.href);
+    </script>
 
     <!-- JiaThis Button BEGIN -->
+    <div class="ui divider">
+
+    </div>
 <div class="jiathis_style">
 	<span class="jiathis_txt">分享到：</span>
 	<a class="jiathis_button_tools_1"></a>
