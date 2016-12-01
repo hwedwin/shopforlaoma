@@ -42,17 +42,24 @@ Myblog::App.controllers :share do
       else
         if current_user.user_node
           #判断当前用户有没有在某个分享链接中
-          if current_user.user_node.product == @fuser_node.product
-            #判断当前用户所在的分享链接中是不是和当前分享在同一个产品下
+          if @fuser_node.is_root
             session[:user_node] = current_user.user_node.id
             redirect url(:share, :index, :id => session[:user_node])
           else
-            #断开当前用户的分销链，并且链接到当前父节点下
-            current_user.user_node = @fuser_node
-            current_user.save
-            session[:user_node] = current_user.user_node.id
-            redirect url(:share, :index, :id => session[:user_node])
+              #若当然节点不是根节点，则
+            if current_user.user_node.product == @fuser_node.product
+              #判断当前用户所在的分享链接中是不是和当前分享在同一个产品下
+              session[:user_node] = current_user.user_node.id
+              redirect url(:share, :index, :id => session[:user_node])
+            else
+              #断开当前用户的分销链，并且链接到当前父节点下
+              current_user.user_node = @fuser_node
+              current_user.save
+              session[:user_node] = current_user.user_node.id
+              redirect url(:share, :index, :id => session[:user_node])
+            end
           end
+
         else
           #若是当前用户不在一个分销链上，则新建一个节点
           @new_user_node = UserNode.new
