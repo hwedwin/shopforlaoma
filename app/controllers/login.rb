@@ -59,6 +59,13 @@ Myblog::App.controllers :login do
       session[:product_id] = nil
       redirect url(:products, :index, :id => @product_id)
     end
+    if session[:intend_to_buy]
+      session[:intend_to_buy] = false
+      @product_id = session[:product_id]
+      session[:product_id] = nil
+      redirect url('/order/'+@product_id)
+
+    end
     redirect url(:personal, :index)
   end
 

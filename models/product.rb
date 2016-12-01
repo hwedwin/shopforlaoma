@@ -5,6 +5,7 @@ class Product
   @@new_product = 0
 
   belongs_to :category, validate: false, dependent: :nullify, optional: true
+  belongs_to :order, validate: false, dependent: :nullify, optional: true
   has_many :pictures
   has_one :car
   accepts_nested_attributes_for :car

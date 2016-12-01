@@ -5,6 +5,7 @@ class User
   embeds_many :roles
   has_one :balance
   has_one :user_node
+  has_many :orders
 
   # field <name>, :type => <type>, :default => <value>
   field :username, :type => String
