@@ -12,20 +12,9 @@ module Myblog
           else
             if current_user
               if current_user.user_node
-                session[:user_node] = current_user.user_node.id
+                return session[:user_node] = current_user.user_node.id
               else
-                @user_node  = UserNode.new
-                @user_node.user = User.find(current_user.id)
-                @user_node.seller = current_user.id
-                if @user_node.user.mobile == '18820965455'
-                  @user_node.is_root = true
-                else
-                  @user_node.is_root = false
-                end
-
-                @user_node.save
-                return session[:user_node] = @user_node.id
-
+                generate_root
               end
             else
               session[:user_node] = UserNode.where(is_root: true).first.id
@@ -34,24 +23,30 @@ module Myblog
           end
 
         else
-          @root_user = User.where(mobile: "18820965455").first
-          if UserNode.where(user: @root_user).exists?
-            @user_node  = UserNode.where(user: @root_user).first
-            if !@user_node.is_root
-              @user_node.is_root = true
-            end
-            return session[:user_node] = @user_node.id
-          else
-            @user_node  = UserNode.new
-            @user_node.user = @root_user
-            @user_node.seller = @root_user.id
-            @user_node.is_root = true
-            @user_node.save
-            return session[:user_node] = @user_node.id
-          end#if
+          #生成根节点
+          generate_root
 
         end#if
       end#def
+
+      def generate_root
+        @root_user = User.where(mobile: "18820965455").first
+        if UserNode.where(user: @root_user).exists?
+          @user_node  = UserNode.where(user: @root_user).first
+          if !@user_node.is_root
+            @user_node.is_root = true
+          end
+          return session[:user_node] = @user_node.id
+        else
+          @user_node  = UserNode.new
+          @user_node.user = @root_user
+          @user_node.seller = @root_user.id
+          @user_node.is_root = true
+          @user_node.save
+          return session[:user_node] = @user_node.id
+        end#if
+
+      end
 
     end
 
