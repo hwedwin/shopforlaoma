@@ -25,17 +25,32 @@ Myblog::App.controllers :share do
       redirect url(:login, :index)
     end
     session[:user_node] = params[:id]
-    @fuser_node = UserNode.find(session[:user_node])
     if current_user
+      #是否已经登录
+      @fuser_node = UserNode.find(session[:user_node])
       if @fuser_node.user == User.find(current_user.id)
+        #判断此页是不是打开的是自己的链接
         session[:user_node] = params[:id]
 
       else
         if current_user.user_node
-          session[:user_node] = current_user.user_node.id
+          #判断当前用户有没有在某个分享链接中
+          if current_user.user_node.product == @fuser_node.product
+            #判断当前用户所在的分享链接中是不是和当前分享在同一个产品下
+            session[:user_node] = current_user.user_node.id
+            redirect url(:share, :index, :id => session[:user_node])
+          else
+            #断开当前用户的分销链，并且链接到当前父节点下
+            current_user.user_node = @fuser_node
+            current_user.save
+            session[:user_node] = current_user.user_node.id
+            redirect url(:share, :index, :id => session[:user_node])
+          end
         else
+          #若是当前用户不在一个分销链上，则新建一个节点
           @new_user_node = UserNode.new
           @new_user_node.seller = @fuser_node.seller
+          @new_user_node.user = User.find(current_user.id)
           @new_user_node.parent_node = @fuser_node.id
           @new_user_node.user_node = @fuser_node
           if params[:product_id]
@@ -46,16 +61,21 @@ Myblog::App.controllers :share do
 
           @new_user_node.save
           session[:user_node] = @new_user_node.id
+          redirect url(:share, :index, :id => session[:user_node])
 
         end
 
       end
     else
-      if params[:product_id]
-        redirect url(:products,:index, :id => params[:product_id])
+      #若是没有登录
+      #将当前参数写入父节点中
+      if session[:is_from_share]
+        redirect url(:login, :index)
       else
-        redirect url(:products,:index)
+        session[:is_from_share] = true
+        redirect url(:share, :index, :id => session[:user_node])
       end
+
 
     end
 

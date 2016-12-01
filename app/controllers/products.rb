@@ -23,7 +23,13 @@ Myblog::App.controllers :products do
 
   get :index do
     @products = Product.all
+    @node = get_current_node
     render 'products/index'
+  end
+
+
+  get :session_out do
+    session.clear
   end
 
   get :index, :with => :id do
