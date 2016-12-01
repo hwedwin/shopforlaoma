@@ -3,7 +3,7 @@
 module Myblog
   class App
     module ShareHelper
-      def get_current_node(product)
+      def get_current_node
 
         if session[:user_node]
           return session[:user_node]
