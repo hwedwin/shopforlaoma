@@ -17,7 +17,7 @@ module Myblog
                 @user_node  = UserNode.new
                 @user_node.user = User.find(current_user.id)
                 @user_node.seller = current_user.id
-                if @user_node.mobile == '18820965455'
+                if @user_node.user.mobile == '18820965455'
                   @user_node.is_root = true
                 else
                   @user_node.is_root = false

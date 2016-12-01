@@ -34,6 +34,7 @@ Myblog::App.controllers :share do
       #是否已经登录
       @title = '来自老猫商城，分享得丰厚佣金'
       if UserNode.where(id: session[:user_node]).exists?
+        #若是旧的数据没有链接，则重新生成
         @fuser_node = UserNode.find(session[:user_node])
       else
         @fuser_node = UserNode.find(get_current_node)
