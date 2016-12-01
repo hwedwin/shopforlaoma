@@ -73,7 +73,7 @@ Myblog::App.controllers :share do
         redirect url(:login, :index)
       else
         session[:is_from_share] = true
-        redirect url(:share, :index, :id => session[:user_node])
+        redirect url(:products, :id => params[:product_id])
       end
 
 
