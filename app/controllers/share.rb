@@ -33,7 +33,12 @@ Myblog::App.controllers :share do
     if current_user
       #是否已经登录
       @title = '来自老猫商城，分享得丰厚佣金'
-      @fuser_node = UserNode.find(session[:user_node])
+      if UserNode.where(id: session[:user_node]).exists?
+        @fuser_node = UserNode.find(session[:user_node])
+      else
+        @fuser_node = UserNode.find(get_current_node)
+      end
+
       @mobile = @fuser_node.user.mobile
       if @fuser_node.user == User.find(current_user.id)
         #判断此页是不是打开的是自己的链接
