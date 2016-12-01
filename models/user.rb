@@ -13,7 +13,7 @@ class User
   field :mobile, :type => String
   field :email,            :type => String
   field :crypted_password, :type => String
-  field :is_seller, :type => String
+  field :is_seller, :type => Boolean
 
   attr_accessor :password, :password_confirmation
 
