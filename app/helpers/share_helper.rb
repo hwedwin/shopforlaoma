@@ -36,6 +36,7 @@ module Myblog
 
       def generate_root
         @root_user = User.where(mobile: "18820965455").first
+
         if UserNode.where(user: @root_user).exists?
           @user_node  = UserNode.where(user: @root_user).first
           if !@user_node.is_root

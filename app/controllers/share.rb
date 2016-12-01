@@ -96,7 +96,7 @@ Myblog::App.controllers :share do
       else
         session[:is_from_share] = true
         session[:product_id] = params[:product_id]
-        redirect url(:products, :index, :id => params[:product_id])
+        redirect url("products/"+params[:product_id])
       end
 
 
