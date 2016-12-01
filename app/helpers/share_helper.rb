@@ -17,7 +17,12 @@ module Myblog
                 generate_root
               end
             else
-              session[:user_node] = UserNode.where(is_root: true).first.id
+              if UserNode.where(is_root: true).exists?
+                return session[:user_node] = UserNode.where(is_root: true).first.id
+              else
+                generate_root
+              end
+
             end
 
           end
