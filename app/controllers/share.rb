@@ -34,6 +34,7 @@ Myblog::App.controllers :share do
       #是否已经登录
       @title = '来自老猫商城，分享得丰厚佣金'
       @fuser_node = UserNode.find(session[:user_node])
+      @mobile = @fuser_node.user.mobile
       if @fuser_node.user == User.find(current_user.id)
         #判断此页是不是打开的是自己的链接
         session[:user_node] = params[:id]
@@ -79,6 +80,7 @@ Myblog::App.controllers :share do
         redirect url(:login, :index)
       else
         session[:is_from_share] = true
+        session[:product_id] = params[:product_id]
         redirect url(:products, :index, :id => params[:product_id])
       end
 

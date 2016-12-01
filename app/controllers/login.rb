@@ -34,7 +34,7 @@ Myblog::App.controllers :login do
           set_current_user(@user)
       else
         @message = '验证码错误！'
-        redirect url(:personal, :index), :error => @message.html_safe+'<i class="close icon"></i>'.html_safe
+        redirect url(:login, :index), :error => @message.html_safe+'<i class="close icon"></i>'.html_safe
       end
 
     else
@@ -52,6 +52,12 @@ Myblog::App.controllers :login do
         return nil
       end
 
+    end
+    if session[:is_from_share]
+      session[:is_from_share] = false
+      @product_id = session[:product_id]
+      session[:product_id] = nil
+      redirect url(:products, :index, :id => @product_id)
     end
     redirect url(:personal, :index)
   end

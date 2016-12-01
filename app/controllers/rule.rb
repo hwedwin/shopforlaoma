@@ -24,8 +24,8 @@ Myblog::App.controllers :rule do
     @rule = 'active'
     render 'rule/index'
   end
-  get :product do
-    
+  get :share_nodes do
+    UserNode.all.to_json
   end
 
 
