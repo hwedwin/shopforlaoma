@@ -84,6 +84,7 @@ Myblog::App.controllers :share do
       #若是没有登录
       #将当前参数写入父节点中
       if session[:is_from_share]
+        session[:is_from_share] = true
         redirect url(:login, :index)
       else
         session[:is_from_share] = true
