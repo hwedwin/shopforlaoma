@@ -21,12 +21,18 @@ Myblog::App.controllers :share do
 
   get :index, :with => :id do
 
+    if params[:product_id]
+      @product = Product.find(params[:product_id])
+    else
+      @product = Product.first
+    end
     if params[:id].nil?
       redirect url(:login, :index)
     end
     session[:user_node] = params[:id]
     if current_user
       #是否已经登录
+      @title = '来自老猫商城，分享得丰厚佣金'
       @fuser_node = UserNode.find(session[:user_node])
       if @fuser_node.user == User.find(current_user.id)
         #判断此页是不是打开的是自己的链接

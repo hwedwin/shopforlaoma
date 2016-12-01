@@ -8,6 +8,10 @@
 <div class="ui segment">
   <div class="ui main text container">
     <h2>我的分享</h2>
+    <h3>商品：<%= @product.product_model_type %></h3>
+    <div class="ui divider"></div>
+    <%= image_tag Picture.find(@product.cover).image.url, class: "image", width: "100%" %>
+    <div class="ui divider"></div>
     <h3>分享此页链接或者转发下方二维码，一级，二级分享者交易成功，您可获得佣金</h3>
     <div class="ui divider">
 
