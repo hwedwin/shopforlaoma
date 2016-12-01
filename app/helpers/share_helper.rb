@@ -19,7 +19,6 @@ module Myblog
             @user_node  = UserNode.new
             @user_node.user = @root_user
             @user_node.seller = @root_user.id
-            @user_node.product = product
             @user_node.is_root = true
             @user_node.save
             return session[:user_node] = @user_node.id
