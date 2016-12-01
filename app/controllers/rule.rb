@@ -24,5 +24,9 @@ Myblog::App.controllers :rule do
     @rule = 'active'
     render 'rule/index'
   end
+  get :product do
+    
+  end
+
 
 end

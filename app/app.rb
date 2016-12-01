@@ -10,6 +10,13 @@ module Myblog
       render 'index'
     end
 
+
+    get 'clear' do
+      #清除session以便于测试
+      session.clear
+      redirect url('/')
+    end
+
     ##
     # Caching support.
     #
