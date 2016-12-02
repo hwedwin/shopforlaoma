@@ -33,7 +33,13 @@ Myblog::App.controllers :products do
   end
 
   get :index, :with => :id do
-    @product = Product.find(params[:id])
+    if Product.where(id: params[:id]).exists?
+        @product = Product.find(params[:id])
+    else
+        @product = Product.first
+    end
+
+
     render 'products/product'
   end
 
