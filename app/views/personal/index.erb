@@ -27,27 +27,27 @@
     </div>
     <div class="column">
       <br>  <br>
-      <p>手机：<%= current_user.mobile %></p>
-      <p>邮箱：<%= current_user.email %></p>
-      <p>用户名：<%= current_user.username %></p>
-      <p>我的签名：<%= current_user.personal_title %></p>
+      <p>手机：<%= @user.mobile %></p>
+      <p>邮箱：<%= @user.email %></p>
+      <p>用户名：<%= @user.username %></p>
+      <p>我的签名：<%= @user.personal_title %></p>
 
 
 
     </div>
     <div class="column">
       <br>  <br>
-      <p style="word-break:break-all;">编号：<%= current_user.id %></p>
-      <p>手机：<%= current_user.mobile %></p>
-      <p>昵称：<%= current_user.fake_name %></p>
+      <p style="word-break:break-all;">编号：<%= @user.id %></p>
+      <p>手机：<%= @user.mobile %></p>
+      <p>昵称：<%= @user.fake_name %></p>
 
 
-      <p>真实姓名：<%= current_user.real_name %></p>
+      <p>真实姓名：<%= @user.real_name %></p>
     </div>
     <div class="column">  <br>  <br>
-      <p>邮箱：<%= current_user.email %></p>
-        <p>最近资料更新于：<%= current_user.updated_at %></p>
-      <p>注册于：<%= current_user.created_at %></p>
+      <p>邮箱：<%= @user.email %></p>
+        <p>最近资料更新于：<%= @user.updated_at %></p>
+      <p>注册于：<%= @user.created_at %></p>
     </div>
   </div>
 
@@ -129,57 +129,65 @@
 </div>
 
 <div class="ui modal" id="editUserModal">
+  <div class="ui dimmer">
+  <div class="content">
+    <div class="center">
+      <h2 class="ui inverted icon header">
+        <i class="progress icon"></i>
+        <span id="loadMessage">正在保存更改......<span>
+      </h2>
+    </div>
+  </div>
+</div>
   <i class="close icon"></i>
   <div class="header">
     修改个人资料
   </div>
-  <% personal = User.find(current_user.id) %>
-  <% form_tag url('personal/update'), :remote => true, method: "post", class: "ui form" do %>
+  <% personal = User.find(@user.id) %>
+  <% form_tag url('personal/update'), id: 'userInfoForm', method: "post", class: "ui form" do %>
     <div class="ui container">
       <div class="ui header">
         <br/>
         <div class="field">
           <label for="mobile">编号:</label>
-          <input disabled="disabled" type="text" id="valid_mobile" name="mobile" value="<%= current_user.id %>" placeholder=''><br/>
+          <input disabled="disabled" type="text" id="valid_mobile" name="" value="<%= @user.id %>" placeholder=''><br/>
         </div>
         <div class="field">
           <label for="mobile">手机:</label>
-          <input disabled="disabled" type="text" id="valid_mobile" name="mobile" value="<%= current_user.mobile %>" placeholder=''><br/>
+          <input disabled="disabled" type="text" id="valid_mobile" name="" value="<%= @user.mobile %>" placeholder=''><br/>
         </div>
         <div class="field">
           <label for="mobile">邮箱:</label>
-          <input type="text" id="valid_mobile" name="mobile" value="<%= current_user.email %>" placeholder=''><br/>
+          <input type="text" id="valid_mobile" name="email" value="<%= @user.email %>" placeholder=''><br/>
         </div>
         <div class="field">
           <label for="mobile">用户名:</label>
-          <input type="text" id="valid_mobile" name="mobile" value="<%= current_user.username %>" placeholder=''><br/>
+          <input type="text" id="valid_mobile" name="username" value="<%= @user.username %>" placeholder=''><br/>
         </div>
         <div class="field">
           <label for="mobile">昵称:</label>
-          <input type="text" id="valid_mobile" name="mobile" value="<%= current_user.fake_name %>" placeholder=''><br/>
+          <input type="text" id="valid_mobile" name="fake_name" value="<%= @user.fake_name %>" placeholder=''><br/>
         </div>
         <div class="field">
           <label for="mobile">真实姓名:</label>
-          <input type="text" id="valid_mobile" name="mobile" value="<%= current_user.real_name %>" placeholder=''><br/>
+          <input type="text" id="valid_mobile" name="real_name" value="<%= @user.real_name %>" placeholder=''><br/>
         </div>
         <div class="field">
           <label for="mobile">签名:</label>
-          <textarea name="personal_title" rows="8" cols="80">
+          <textarea name="personal_title" rows="8" value="" cols="80">
+            <%= @user.personal_title %>
           </textarea>
           <br/>
         </div>
-        <button type="submit" class="ui positive  button">
-          保存
-        </button>
 
       </div>
     </div>
   <% end %>
   <div class="actions">
-    <button class="ui black deny button">
+    <button  type="button" class="ui black deny button">
       取消
     </button>
-    <button type="submit" class="ui positive  button">
+    <button id="saveUserInfoBtn" type="button" class="ui positive  button">
       保存
     </button>
   </div>
@@ -189,9 +197,21 @@
 
 
 <script type="text/javascript">
-$('.menu .item').tab();
-$('#editUserInfo').click(function(){
-  $('#editUserModal').modal('show');
-});
+  $('.menu .item').tab();
+  $('#editUserInfo').click(function(){
+    $('#editUserModal').modal({
+    closable  : false,
+    onDeny    : function(){
+      return true;
+    },
+    onApprove : function() {
+      $('#editUserModal').dimmer("show");
+      $('#userInfoForm').submit();
+      return false;
+    }
+  }).modal('show');
+
+  });
+
 
 </script>

@@ -50,11 +50,29 @@ Myblog::App.controllers :personal do
       @orders = []
 
     end
+    @user = User.find(current_user.id)
     render 'personal/index'
   end
 
-  post :update , :provides => :js do
-    render :erb, 'personal/update.js'
+  post :update do
+    if current_user
+      @user = User.find(current_user.id)
+      if params[:username]
+        @user.username = params[:username]
+      else
+        @user.username = current_user.mobile
+      end
+      @user.email = params[:email]
+      @user.fake_name = params[:fake_name]
+      @user.real_name = params[:real_name]
+      @user.personal_title = params[:personal_title]
+      if @user.save
+        redirect url('/personal')
+      end
+
+    else
+      redirect url('/login/index')
+    end
   end
 
 end
