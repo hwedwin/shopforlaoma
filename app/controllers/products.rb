@@ -22,6 +22,7 @@ Myblog::App.controllers :products do
   # end
 
   get :index do
+    @products_active = "active"
     @products = Product.all
     @node = get_current_node
     render 'products/index'
