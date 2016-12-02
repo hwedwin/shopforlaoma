@@ -53,4 +53,8 @@ Myblog::App.controllers :personal do
     render 'personal/index'
   end
 
+  post :update , :provides => :js do
+    render :erb, 'personal/update.js'
+  end
+
 end

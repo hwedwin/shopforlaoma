@@ -40,10 +40,11 @@
     <% if @product %>
     <%= image_tag Picture.find(@product.cover).image.url, class: "image", width: "100%" %>
     <% else %>
-    
+
     <% end %>
 
   </div>
+  <%= javascript_include_tag 'jquery', 'jquery-ujs', 'application' %>
   <style type="text/css">
 
     .hidden.menu {

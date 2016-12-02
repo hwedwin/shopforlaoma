@@ -18,7 +18,7 @@
     <div class="column">
       <h2 class="ui icon header">
         <i class="circular user icon"></i>
-        个人中心<span style="font-size:12px" class="ui mini button">修改资料</span>
+        个人中心<span id="editUserInfo" style="font-size:12px" class="ui mini button">修改资料</span>
         <div style="font-size:15px">账户余额：<%= @balance.amount %></div>
         <div class="ui mini red basic button">
           提现
@@ -30,6 +30,7 @@
       <p>手机：<%= current_user.mobile %></p>
       <p>邮箱：<%= current_user.email %></p>
       <p>用户名：<%= current_user.username %></p>
+      <p>我的签名：<%= current_user.personal_title %></p>
 
 
 
@@ -37,11 +38,14 @@
     <div class="column">
       <br>  <br>
       <p style="word-break:break-all;">编号：<%= current_user.id %></p>
-
+      <p>手机：<%= current_user.mobile %></p>
       <p>昵称：<%= current_user.fake_name %></p>
+
+
       <p>真实姓名：<%= current_user.real_name %></p>
     </div>
     <div class="column">  <br>  <br>
+      <p>邮箱：<%= current_user.email %></p>
         <p>最近资料更新于：<%= current_user.updated_at %></p>
       <p>注册于：<%= current_user.created_at %></p>
     </div>
@@ -64,6 +68,7 @@
         <br>
           <h3>哦，您还没有流水呢～</h3>
           <h4>——请接着<a href="/products">分享</a>赚钱</h4>
+          <h4>——或者，在有余额的情况下，<a href="/products">提现</a></h4>
           <br><br><br>
       </div>
       <div class="">
@@ -122,8 +127,71 @@
 
   </div>
 </div>
+
+<div class="ui modal" id="editUserModal">
+  <i class="close icon"></i>
+  <div class="header">
+    修改个人资料
+  </div>
+  <% personal = User.find(current_user.id) %>
+  <% form_tag url('personal/update'), :remote => true, method: "post", class: "ui form" do %>
+    <div class="ui container">
+      <div class="ui header">
+        <br/>
+        <div class="field">
+          <label for="mobile">编号:</label>
+          <input disabled="disabled" type="text" id="valid_mobile" name="mobile" value="<%= current_user.id %>" placeholder=''><br/>
+        </div>
+        <div class="field">
+          <label for="mobile">手机:</label>
+          <input disabled="disabled" type="text" id="valid_mobile" name="mobile" value="<%= current_user.mobile %>" placeholder=''><br/>
+        </div>
+        <div class="field">
+          <label for="mobile">邮箱:</label>
+          <input type="text" id="valid_mobile" name="mobile" value="<%= current_user.email %>" placeholder=''><br/>
+        </div>
+        <div class="field">
+          <label for="mobile">用户名:</label>
+          <input type="text" id="valid_mobile" name="mobile" value="<%= current_user.username %>" placeholder=''><br/>
+        </div>
+        <div class="field">
+          <label for="mobile">昵称:</label>
+          <input type="text" id="valid_mobile" name="mobile" value="<%= current_user.fake_name %>" placeholder=''><br/>
+        </div>
+        <div class="field">
+          <label for="mobile">真实姓名:</label>
+          <input type="text" id="valid_mobile" name="mobile" value="<%= current_user.real_name %>" placeholder=''><br/>
+        </div>
+        <div class="field">
+          <label for="mobile">签名:</label>
+          <textarea name="personal_title" rows="8" cols="80">
+          </textarea>
+          <br/>
+        </div>
+        <button type="submit" class="ui positive  button">
+          保存
+        </button>
+
+      </div>
+    </div>
+  <% end %>
+  <div class="actions">
+    <button class="ui black deny button">
+      取消
+    </button>
+    <button type="submit" class="ui positive  button">
+      保存
+    </button>
+  </div>
+
+</div>
+
+
+
 <script type="text/javascript">
-$('.menu .item')
-.tab()
-;
+$('.menu .item').tab();
+$('#editUserInfo').click(function(){
+  $('#editUserModal').modal('show');
+});
+
 </script>
