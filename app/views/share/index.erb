@@ -4,6 +4,17 @@
   min-height: auto;
   padding: 1em 0em;
 }
+#qrcode img{
+  display: block !important;
+  width: 170px;
+  height: 170px;
+  text-align: center;
+  left: 60px;
+  position: relative;
+}
+#qrcode{
+  text-align: center !important;
+}
 </style>
 <div class="ui segment">
   <div class="ui main text container">
@@ -16,13 +27,16 @@
     <div class="ui divider">
 
     </div>
-    <div id="qrcode"></div>
-      <script type="text/javascript">
-      new QRCode(document.getElementById("qrcode"), window.location.href);
-    </script>
+    <div class="ui centered text" style="text-align:center;">
+      <div id="qrcode"  style="text-align:center;"></div>
+        <script type="text/javascript">
+        new QRCode(document.getElementById("qrcode"), window.location.href);
+        </script>
+    </div>
+
 
     <!-- JiaThis Button BEGIN -->
-    <div class="ui divider">
+    <!-- <div class="ui divider">
 
     </div>
 <div class="jiathis_style">
@@ -37,7 +51,7 @@
 <script type="text/javascript">
 var jiathis_config = {data_track_clickback:'true'};
 </script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2120621" charset="utf-8"></script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2120621" charset="utf-8"></script> -->
 <!-- JiaThis Button END -->
   </div>
 <br/><br/><br/>
