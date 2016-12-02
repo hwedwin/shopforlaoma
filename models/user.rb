@@ -13,8 +13,11 @@ class User
   field :email, :type => String
   field :mobile, :type => String
   field :email,            :type => String
+  field :real_name,            :type => String
+  field :fake_name,            :type => String
   field :crypted_password, :type => String
   field :is_seller, :type => Boolean
+  field :is_super, :type => Boolean
 
   attr_accessor :password, :password_confirmation
 

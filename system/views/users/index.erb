@@ -1,0 +1,179 @@
+
+<script type="text/javascript">
+
+</script>
+<style media="screen">
+  .cust{
+    width: 40% !important;
+    float: left!important;
+  }
+</style>
+
+<br>
+<div class="ui  container">
+  <div class="ui segment">
+    <div class="ui huge header">
+      用户管理
+    </div>
+    <form class="" action="/webadmin/user/deleteuserss" method="post">
+      <div class="ui buttons">
+        <!-- <a href="/system/users/new" class="ui green basic button">增加</a> -->
+        <button type="submit" class="ui basic red button">批量删除</button>
+        <input type="hidden" name="ids" value="" id="users_delete">
+      </div>
+    </form>
+  </div>
+  <div class="ui load segment">
+    <div class="ui dimmer">
+    <div class="content">
+      <div class="center">
+        <h2 class="ui inverted icon header">
+          <i class="progress icon"></i>
+          <span id="loadMessage">正在保存更改......<span>
+        </h2>
+      </div>
+    </div>
+  </div>
+    <table class="ui celled table">
+      <thead>
+        <tr><th width="100">
+          全选／反选 <br>
+          <div class="ui master checkbox">
+            <input type="checkbox">
+            <label for=""></label>
+          </div>
+        </th>
+        <th>编号</th>
+        <th>用户名</th>
+        <th>手机号</th>
+        <th>邮箱</th>
+        <th>真实姓名</th>
+        <th>昵称</th>
+        <th>是否是销售</th>
+        <th>是否是管理员</th>
+        <th>注册时间</th>
+        <th>资料更新时间</th>
+        <th>操作</th>
+      </tr></thead>
+      <tbody>
+        <% if @users.length > 0 and @users %>
+        <% @users.each do |user| %>
+        <tr>
+          <td>
+            <div class="ui child checkbox" userid="<%= user.id %>">
+              <input type="checkbox" tabindex="0">
+              <label for=""></label>
+            </div>
+          </td>
+          <td><%= user.id %></td>
+          <td><%= user.username %></td>
+          <td><%= user.mobile %></td>
+          <td><%= user.email %></td>
+          <td><%= user.real_name %></td>
+          <td><%= user.fake_name %></td>
+          <td>
+            <div class="ui left floated compact segment">
+              <div data-id='<%= user.id %>' class="ui fitted checkbox" id="checkSeller">
+                <input type="checkbox" <%= user.is_seller ? 'checked="checked"' : "" %>>
+                <label></label>
+              </div>
+            </div>
+          </td>
+          <td><div class="ui left floated compact segment">
+            <div class="ui fitted checkbox" id="checkSuper">
+              <input type="checkbox" disabled="disabled" <%= user.is_super ? 'checked="checked"' : "" %>>
+              <label></label>
+            </div>
+          </div></td>
+          <td><%= user.created_at %></td>
+          <td><%= user.updated_at %></td>
+          <td>其他</td>
+        </tr>
+        <% end %>
+        <% else %>
+          <p>暂时没有数据</p>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr><th colspan="4">
+          <?php echo $pagination; ?>
+        </th>
+      </tr></tfoot>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+$('.master.checkbox')
+.checkbox({
+  // check all children
+  onChecked: function() {
+    var
+      $childCheckbox  = $('.child.checkbox');
+    ;
+    $childCheckbox.checkbox('check');
+  },
+  // uncheck all children
+  onUnchecked: function() {
+    var
+      $childCheckbox  = $('.child.checkbox');
+    ;
+    $childCheckbox.checkbox('uncheck');
+  }
+})
+;
+var ids = '';
+$('.child.checkbox').each(function(){
+    var id = $(this).attr('userid');
+    $(this).checkbox({
+      'onChecked': function(){
+        ids = ids+ id+ "|";
+        $("#users_delete").val(ids);
+
+      },
+      'onUnchecked': function(){
+        var regx = new RegExp(id+'\\|');
+        ids = ids.replace(regx, '');
+
+        $("#users_delete").val(ids);
+        if (ids=='') {
+          $('.master.checkbox').checkbox('uncheck');
+        }
+      }
+    });
+});
+
+$("#checkSeller").checkbox({
+  onChecked: function() {
+    console.log('checked');
+    $('.ui.load.segment').dimmer('show');
+    $('#loadMessage').html("正在保存更改......");
+    var user_id = $("#checkSeller").attr("data-id");
+    $.get('/system/users/enable_seller/'+user_id, function(result){
+      if (result == '1') {
+        $('#loadMessage').html("更改成功！");
+        $('.ui.load.segment').dimmer('hide');
+      }
+      if (result == '0') {
+        $('#loadMessage').html("更改失败，请检查网络");
+        $('.ui.load.segment').dimmer('hide');
+      }
+    });
+  },
+  onUnchecked: function() {
+    console.log('unchecked');
+  $('.ui.load.segment').dimmer('show');
+  $('#loadMessage').html("正在保存更改......");
+  var user_id = $("#checkSeller").attr("data-id");
+  $.get('/system/users/disable_seller/'+user_id, function(result){
+    if (result == '1') {
+      $('#loadMessage').html("更改成功！");
+      $('.ui.load.segment').dimmer('hide');
+    }
+    if (result == '0') {
+      $('#loadMessage').html("更改失败，请检查网络");
+      $('.ui.load.segment').dimmer('hide');
+    }
+  });
+  }
+});
+</script>

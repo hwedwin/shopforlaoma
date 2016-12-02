@@ -44,6 +44,12 @@ Myblog::App.controllers :personal do
     else
       @bills = []
     end
+    if current_user.orders
+      @orders = current_user.orders
+    else
+      @orders = []
+
+    end
     render 'personal/index'
   end
 

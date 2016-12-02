@@ -14,13 +14,40 @@
   <div class="ui divider">
 
   </div>
-  <div class="ui header">
-    <h1>个人资料</h1>
-    <div class="ui text">
-      手机号：<%= current_user.mobile %><br/>
-      账号收入： <%= @balance.amount %>
+  <div class="ui doubling four column grid">
+    <div class="column">
+      <h2 class="ui icon header">
+        <i class="circular user icon"></i>
+        个人中心<span style="font-size:12px" class="ui mini button">修改资料</span>
+        <div style="font-size:15px">账户余额：<%= @balance.amount %></div>
+        <div class="ui mini red basic button">
+          提现
+        </div>
+      </h2>
+    </div>
+    <div class="column">
+      <br>  <br>
+      <p>手机：<%= current_user.mobile %></p>
+      <p>邮箱：<%= current_user.email %></p>
+      <p>用户名：<%= current_user.username %></p>
+
+
+
+    </div>
+    <div class="column">
+      <br>  <br>
+      <p style="word-break:break-all;">编号：<%= current_user.id %></p>
+
+      <p>昵称：<%= current_user.fake_name %></p>
+      <p>真实姓名：<%= current_user.real_name %></p>
+    </div>
+    <div class="column">  <br>  <br>
+        <p>最近资料更新于：<%= current_user.updated_at %></p>
+      <p>注册于：<%= current_user.created_at %></p>
     </div>
   </div>
+
+
   <div class="ui divider">
 
   </div>
@@ -28,17 +55,71 @@
     <div class="ui top attached tabular menu">
       <a class="active item" data-tab="first">我的收支</a>
       <a class="item" data-tab="second">我的订单</a>
-      <a class="item" data-tab="third">我的分享</a>
+
     </div>
     <div class="ui bottom attached active tab tab-view" data-tab="first">
-      First
+      <% if @bills.length > 0 %>
+      <% else %>
+      <div class="ui container">
+        <br>
+          <h3>哦，您还没有流水呢～</h3>
+          <h4>——请接着<a href="/products">分享</a>赚钱</h4>
+          <br><br><br>
+      </div>
+      <div class="">
+
+      </div>
+      <% end %>
     </div>
     <div class="ui bottom attached tab tab-view" data-tab="second">
-      Second
+      <div class="ui vertically divided grid">
+
+
+
+      <% if @orders.length > 0 %>
+
+        <% @orders.each do |order| %>
+        <div class="doubling six column row">
+          <div class="column" style="word-break:break-all;">
+            编号：<%= order.id %>
+          </div>
+          <div class="column"  style="word-break:break-all;">
+              销售电话：<%= User.find(order.seller).mobile %>
+          </div>
+          <div class="column"  style="word-break:break-all;">
+            商品：
+            <ul>
+              <% order.products.each do |product| %>
+                <li><a href="/products/<%= product.id %>"><%= product.product_model_type %></a></li>
+              <% end %>
+            </ul>
+
+          </div>
+          <div class="column">
+              下单时间：<%= order.created_at %>
+          </div>
+          <div class="column">
+              状态：<%= order.status %>
+          </div>
+          <div class="column">
+              状态更新：<%= order.updated_at %>
+          </div>
+        </div>
+        <% end %>
+          </div>
+      <% else %>
+      <div class="ui container">
+        <br>
+          <h3>哦，您还没有下单呢～</h3>
+          <h4>——请接着<a href="/products">随意逛逛</a></h4>
+          <br><br><br>
+      </div>
+      <div class="">
+
+      </div></div>
+      <% end %>
     </div>
-    <div class="ui bottom attached tab tab-view" data-tab="third">
-      Third
-    </div>
+
   </div>
 </div>
 <script type="text/javascript">
