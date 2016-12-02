@@ -98,7 +98,9 @@
             商品：
             <ul>
               <% order.order_products.each do |order_product| %>
-                <li><a href="/products/<%= order_product.product.id %>"><%= order_product.product.product_model_type %></a></li>
+                <li><a href="/products/<%= order_product.product.id %>">
+                <%= order_product.product.product_model_type %></a>　&times;
+                 <%= order_product.counter %></li>
               <% end %>
             </ul>
 
