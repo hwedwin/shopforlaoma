@@ -97,8 +97,8 @@
           <div class="column"  style="word-break:break-all;">
             商品：
             <ul>
-              <% order.products.each do |product| %>
-                <li><a href="/products/<%= product.id %>"><%= product.product_model_type %></a></li>
+              <% order.order_products.each do |order_product| %>
+                <li><a href="/products/<%= order_product.product.id %>"><%= order_product.product.product_model_type %></a></li>
               <% end %>
             </ul>
 

@@ -8,6 +8,7 @@ class Product
   belongs_to :order, validate: false, dependent: :nullify, optional: true
   has_many :pictures
   has_one :car
+  has_one :order_product
   accepts_nested_attributes_for :car
 
 

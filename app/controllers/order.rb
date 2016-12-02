@@ -29,10 +29,13 @@ Myblog::App.controllers :order do
       @order.amount = 0
       @order.status = "正在进行中"
       @order.customer_mobile = current_user.mobile
-      @product = Product.find(params[:id])
       @order.save
-      @product.order = @order
-      @product.save
+      @order_product = OrderProduct.new
+      @order_product.product = Product.find(params[:id])
+      @order_product.order = @order
+      @order_product.counter = 1
+      @order_product.save
+
     else
       session[:intend_to_buy] = true
       session[:product_id] = params[:id]
