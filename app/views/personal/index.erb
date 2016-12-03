@@ -106,13 +106,13 @@
 
           </div>
           <div class="column">
-              下单时间：<%= order.created_at %>
+              下单时间：<%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
           </div>
           <div class="column">
               状态：<%= order.status %>
           </div>
           <div class="column">
-              状态更新：<%= order.updated_at %>
+              状态更新：<%= order.updated_at.strftime("%Y-%m-%d %H:%M:%S") %>
           </div>
         </div>
         <% end %>
@@ -132,72 +132,76 @@
 
   </div>
 </div>
-
-<div class="ui modal" id="editUserModal">
-  <div class="ui dimmer">
-  <div class="content">
-    <div class="center">
-      <h2 class="ui inverted icon header">
-        <i class="progress icon"></i>
-        <span id="loadMessage">正在保存更改......<span>
-      </h2>
+<div class="ui container">
+  <div class="ui modal" id="editUserModal">
+    <div class="header">
+      修改个人资料
     </div>
-  </div>
-</div>
-  <i class="close icon"></i>
-  <div class="header">
-    修改个人资料
-  </div>
-  <% personal = User.find(@user.id) %>
-  <% form_tag url('personal/update'), id: 'userInfoForm', method: "post", class: "ui form" do %>
-    <div class="ui container">
-      <div class="ui header">
-        <br/>
-        <div class="field">
-          <label for="mobile">编号:</label>
-          <input disabled="disabled" type="text" id="valid_mobile" name="" value="<%= @user.id %>" placeholder=''><br/>
-        </div>
-        <div class="field">
-          <label for="mobile">手机:</label>
-          <input disabled="disabled" type="text" id="valid_mobile" name="" value="<%= @user.mobile %>" placeholder=''><br/>
-        </div>
-        <div class="field">
-          <label for="mobile">邮箱:</label>
-          <input type="text" id="valid_mobile" name="email" value="<%= @user.email %>" placeholder=''><br/>
-        </div>
-        <div class="field">
-          <label for="mobile">用户名:</label>
-          <input type="text" id="valid_mobile" name="username" value="<%= @user.username %>" placeholder=''><br/>
-        </div>
-        <div class="field">
-          <label for="mobile">昵称:</label>
-          <input type="text" id="valid_mobile" name="fake_name" value="<%= @user.fake_name %>" placeholder=''><br/>
-        </div>
-        <div class="field">
-          <label for="mobile">真实姓名:</label>
-          <input type="text" id="valid_mobile" name="real_name" value="<%= @user.real_name %>" placeholder=''><br/>
-        </div>
-        <div class="field">
-          <label for="mobile">签名:</label>
-          <textarea name="personal_title" rows="8" value="" cols="80">
-            <%= @user.personal_title %>
-          </textarea>
+    <div class="content">
+    <% personal = User.find(@user.id) %>
+    <% form_tag url('personal/update'), id: 'userInfoForm', method: "post", class: "ui form" do %>
+      <div class="ui container">
+        <div class="ui header">
           <br/>
-        </div>
+          <div class="field">
+            <label for="mobile">编号:</label>
+            <input disabled="disabled" type="text" id="valid_mobile" name="" value="<%= @user.id %>" placeholder=''><br/>
+          </div>
+          <div class="field">
+            <label for="mobile">手机:</label>
+            <input disabled="disabled" type="text" id="valid_mobile" name="" value="<%= @user.mobile %>" placeholder=''><br/>
+          </div>
+          <div class="field">
+            <label for="mobile">邮箱:</label>
+            <input type="text" id="valid_mobile" name="email" value="<%= @user.email %>" placeholder=''><br/>
+          </div>
+          <div class="field">
+            <label for="mobile">用户名:</label>
+            <input type="text" id="valid_mobile" name="username" value="<%= @user.username %>" placeholder=''><br/>
+          </div>
+          <div class="field">
+            <label for="mobile">昵称:</label>
+            <input type="text" id="valid_mobile" name="fake_name" value="<%= @user.fake_name %>" placeholder=''><br/>
+          </div>
+          <div class="field">
+            <label for="mobile">真实姓名:</label>
+            <input type="text" id="valid_mobile" name="real_name" value="<%= @user.real_name %>" placeholder=''><br/>
+          </div>
+          <div class="field">
+            <label for="mobile">签名:</label>
+            <textarea name="personal_title" rows="8" value="" cols="80">
+              <%= @user.personal_title %>
+            </textarea>
+            <br/>
+          </div>
 
+        </div>
+      </div>
+    <% end %>
+    </div>
+    <div class="actions">
+      <button  type="button" class="ui black deny button">
+        取消
+      </button>
+      <button id="saveUserInfoBtn" type="button" class="ui positive  button">
+        保存
+      </button>
+    </div>
+
+  </div>
+  <div class="ui dimmer">
+    <div class="content">
+      <div class="center">
+        <h2 class="ui inverted icon header">
+          <i class="progress icon"></i>
+          <span id="loadMessage">正在保存更改......<span>
+        </h2>
       </div>
     </div>
-  <% end %>
-  <div class="actions">
-    <button  type="button" class="ui black deny button">
-      取消
-    </button>
-    <button id="saveUserInfoBtn" type="button" class="ui positive  button">
-      保存
-    </button>
   </div>
 
 </div>
+
 
 
 

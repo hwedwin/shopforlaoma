@@ -34,9 +34,13 @@
       </div>
     </div>
   </div>
-    <table class="ui celled table">
+  <div class="ui container">
+
+
+    <table class="ui twelve column celled table">
       <thead>
-        <tr><th width="100">
+        <tr>
+        <th>
           全选／反选 <br>
           <div class="ui master checkbox">
             <input type="checkbox">
@@ -59,19 +63,19 @@
         <% if @users.length > 0 and @users %>
         <% @users.each do |user| %>
         <tr>
-          <td>
+          <td style="word-break:break-all;">
             <div class="ui child checkbox" userid="<%= user.id %>">
               <input type="checkbox" tabindex="0">
               <label for=""></label>
             </div>
           </td>
-          <td><%= user.id %></td>
-          <td><%= user.username %></td>
-          <td><%= user.mobile %></td>
-          <td><%= user.email %></td>
-          <td><%= user.real_name %></td>
-          <td><%= user.fake_name %></td>
-          <td>
+          <td style="word-break:break-all;"><%= user.id %></td>
+          <td style="word-break:break-all;"><%= user.username %></td>
+          <td style="word-break:break-all;"><%= user.mobile %></td>
+          <td style="word-break:break-all;"><%= user.email %></td>
+          <td style="word-break:break-all;"><%= user.real_name %></td>
+          <td style="word-break:break-all;"><%= user.fake_name %></td>
+          <td style="word-break:break-all;">
             <div class="ui left floated compact segment">
               <div data-id='<%= user.id %>' class="ui fitted checkbox" id="checkSeller">
                 <input type="checkbox" <%= user.is_seller ? 'checked="checked"' : "" %>>
@@ -100,6 +104,7 @@
         </th>
       </tr></tfoot>
     </table>
+    </div>
   </div>
 </div>
 <script type="text/javascript">
