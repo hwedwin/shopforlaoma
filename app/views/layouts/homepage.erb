@@ -166,7 +166,7 @@
 <div class="ui large top fixed menu transition hidden">
   <div class="ui container">
     <a  href="/" class="<%=@index ? @index : '' %> item">首页</a>
-    <a  href="/products" class="<%=@products ? @products : '' %> item">产品列表</a>
+    <a  href="/products" class="<%=@products_active ? @products_active : '' %>  item">产品列表</a>
     <a  href="/rule" class="<%=@rule ? @rule : '' %> item">规则</a>
     <div class="right menu">
       <div class="item">
@@ -185,7 +185,7 @@
 <!-- Sidebar Menu -->
 <div class="ui vertical inverted sidebar menu left">
   <a href="/" class="<%=@index ? @index : '' %> item">首页</a>
-  <a href="/products" class="<%=@products ? @products : '' %> item">产品列表</a>
+  <a href="/products" class="<%=@products_active ? @products_active : '' %>  item">产品列表</a>
   <a  href="/rule" class="<%=@rule ? @rule : '' %> item">规则</a>
 
   <% if !current_user %>
