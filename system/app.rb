@@ -5,6 +5,12 @@ module Myblog
     enable :sessions
     layout :app
 
+    before '/' do
+      if !current_admin
+        redirect url('/login')
+      end
+    end
+
     get '/' do
       render 'index'
     end
@@ -31,7 +37,7 @@ module Myblog
 
     get 'nodes' do
       @user_node = UserNode.where(is_root: true).first
-      
+
       @user_node.user_nodes.to_json
     end
 

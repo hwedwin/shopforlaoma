@@ -48,62 +48,149 @@
       max-width: 450px;
     }
   </style>
-  <script>
-  $(document)
-    .ready(function() {
-      $('.ui.form')
-        .form({
-          fields: {
-            email: {
-              identifier  : 'email',
-              rules: [
-                {
-                  type   : 'empty',
-                  prompt : 'Please enter your e-mail'
-                },
-                {
-                  type   : 'email',
-                  prompt : 'Please enter a valid e-mail'
-                }
-              ]
-            },
-            password: {
-              identifier  : 'password',
-              rules: [
-                {
-                  type   : 'empty',
-                  prompt : 'Please enter your password'
-                },
-                {
-                  type   : 'length[6]',
-                  prompt : 'Your password must be at least 6 characters'
-                }
-              ]
-            }
-          }
-        })
-      ;
-    })
-  ;
-  </script>
+	<script type="text/javascript">
+	var c=91;//倒计时90秒
+	var t;
+	  function timecounter(){
+	    if (c==0) {
+	      document.getElementById('sms').value = '获取手机验证码';
+	      $("#sms").removeClass('disabled');
+	      return;
+
+	    }
+	    t=setTimeout("timecounter()",1000);
+
+	    c--;
+	    document.getElementById('sms').value=c+'秒之后重新获取';
+
+
+	    return c;
+	  }
+	  function sendsms(event){
+	    //
+	    // 此处接入短信平台
+	    var phonereg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+	    var mobile_number = $("#valid_mobile").val();
+
+
+	    if (!phonereg.test(mobile_number)) {
+	      alert('请输入正确的手机号！');
+	      return ;
+	    }
+
+	    $.get('/login/sms', {mobile: mobile_number}, function(result){
+	      var obj = JSON.parse(result);
+	      // console.log(result);
+	      if (obj.sub_code == 'isv.MOBILE_NUMBER_ILLEGAL') {
+	        $.get('/login/removeSms');
+	        alert('请输入正确的手机号！');
+	        return
+	      }
+	      if (obj.sub_code == 'isv.BUSINESS_LIMIT_CONTROL') {
+	        $.get('/login/removeSms');
+	        alert('您的操作过于频繁，请稍后再试试！');
+	        return
+	      }
+	      if (obj.result.success) {
+	        alert('您的验证码已经发送至您的手机'+mobile_number+",请注意查收");
+	        $("#sms").addClass('disabled');
+	        t = timecounter();
+	        return
+	      }
+	    });
+
+
+
+	  }
+
+
+	  $(document).ready(function(){
+	    $('.ui.form').form({
+	    on: 'submit',
+	    fields: {
+	      mobile: {
+	        identifier: 'mobile',
+	        rules: [
+	          {
+	            type   : 'empty',
+	            prompt : '手机号码没了吗？'
+	          }
+	        ]
+	      },
+	      smstext: {
+	        identifier: 'smstext',
+	        rules: [
+	          {
+	            type   : 'exactLength[4]',
+	            prompt : '请输入至少4位验证码'
+	          }
+	        ]
+	      },
+	      gender: {
+	        identifier: 'gender',
+	        rules: [
+	          {
+	            type   : 'empty',
+	            prompt : 'Please select a gender'
+	          }
+	        ]
+	      },
+	      username: {
+	        identifier: 'username',
+	        rules: [
+	          {
+	            type   : 'empty',
+	            prompt : 'Please enter a username'
+	          }
+	        ]
+	      },
+	      password: {
+	        identifier: 'password',
+	        rules: [
+	          {
+	            type   : 'empty',
+	            prompt : 'Please enter a password'
+	          },
+	          {
+	            type   : 'minLength[6]',
+	            prompt : 'Your password must be at least {ruleValue} characters'
+	          }
+	        ]
+	      },
+	      terms: {
+	        identifier: 'terms',
+	        rules: [
+	          {
+	            type   : 'checked',
+	            prompt : '你怎么能不同意条款！'
+	          }
+	        ]
+	      }
+	    }
+	  })
+	;
+	  });
+
+	</script>
+
 </head>
 <body data-feedly-mini="yes">
 
 <div class="ui middle aligned center aligned grid">
   <div class="column">
     <h2 class="ui teal image header">
-      <img src="/images/logo.png" class="small image">
+      <img src="/log.jpg" class="small image">
       <div class="content">
         登录老猫后台管理系统
       </div>
     </h2>
 		<div class="twelve wide  center aligned padding column">
-			<?php if (Session::get_flash('success')): ?>
-						<div class="ui positive message">
+			<!-- <?php if (Session::get_flash('success')): ?> -->
+						<!-- <div class="ui positive message">
 							<i class="close icon"></i>
-							<strong>成功</strong>
-							<p>
-							<?php echo implode('</p><p>', e((array) Session::get_flash('success'))); ?>
+							<strong>成功</strong> -->
+							<!-- <p> -->
+							<!-- <?php echo implode('</p><p>', e((array) Session::get_flash('success'))); ?>
 							</p>
 						</div>
 			<?php endif; ?>
@@ -115,27 +202,46 @@
 							<?php echo implode('</p><p>', e((array) Session::get_flash('error'))); ?>
 							</p>
 						</div>
-			<?php endif; ?>
-		  <div class="ui large form">
-      <div class="ui stacked segment">
-        <div class="field">
-          <div class="ui left icon input">
-            <i class="user icon"></i>
-            <input type="text" name="name" placeholder="用户名">
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui left icon input">
-            <i class="lock icon"></i>
-            <input type="password" name="pass" placeholder="密码">
-          </div>
-        </div>
-        <div class="ui fluid large teal submit button">登录</div>
-      </div>
+			<?php endif; ?> -->
+			<% form_tag url(:login, :index), :class=>"ui large form" do %>
+			<div class="ui stacked ">
 
-      <div class="ui error message"></div>
+				<div class="field">
+					<div class="ui left icon input">
+						<i class="phone icon"></i>
+						<input type="text" id="valid_mobile" name="mobile" value="" placeholder='请输入您的手机号'><br/>
+					</div>
+				</div>
+				<div class="field">
+					<input id="sms" onclick="sendsms(event)" type="button" value="获取手机验证码" class="ui teal button" />
+				</div>
+				<div class="field">
+					<div class="ui left icon input">
+						<i class="note icon"></i>
+						<input type="text" name="smstext" value="" placeholder='请输入您的手机验证码'>
+					</div>
+				</div>
+				<div class="inline field">
+					<div class="ui checkbox">
+						<input type="checkbox" name="terms" checked="checked">
+						<label>
+							我同意
+							<a href="/login/term">条款</a>
+						</label>
+					</div>
+				</div>
+				<div class="field">
+					<input type="submit" value="登录" class="ui fluid large basic red submit button">
+				</div>
 
-    </div>
+			</div>
+
+			<div class="ui error message">
+
+			</div>
+
+
+		<% end %>
 
 
   </div>

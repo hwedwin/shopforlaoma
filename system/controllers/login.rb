@@ -24,8 +24,8 @@ Myblog::System.controllers :login do
 
 
   before :index do
-    if current_user
-      redirect url(:personal, :index)
+    if current_admin
+      redirect url('/')
     end
   end
 
@@ -35,50 +35,34 @@ Myblog::System.controllers :login do
 
   post :index do
     @message = ''
-    @user = User.where(mobile: params[:mobile]).first
-    if @user
+    @admin = User.where(mobile: params[:mobile]).first
+    if @admin
       if session[:valid]==params[:smstext]
-          set_current_user(@user)
+          if @admin.is_seller 
+            set_current_admin(@admin)
+          else
+            @message = '您没有权限访问系统'
+            redirect url(:login, :index), :error => @message.html_safe+'<i class="close icon"></i>'.html_safe
+          end
+
+
       else
         @message = '验证码错误！'
         redirect url(:login, :index), :error => @message.html_safe+'<i class="close icon"></i>'.html_safe
       end
 
     else
-      if session[:valid]==params[:smstext]
-        @user = User.new
-        @user.mobile = params[:mobile];
-        @user.username = params[:mobile];
-        @user.password = params[:smstext];
-        @user.password_confirmation = params[:smstext];
-        @user.save
-        set_current_user(@user)
-      else
         @message = '验证码错误！'
         render 'login/index'
         return nil
-      end
+    end
 
-    end
-    if session[:is_from_share]
-      session[:is_from_share] = false
-      @product_id = session[:product_id]
-      session[:product_id] = nil
-      redirect url(:products, :index, :id => @product_id)
-    end
-    if session[:intend_to_buy]
-      session[:intend_to_buy] = false
-      @product_id = session[:product_id]
-      session[:product_id] = nil
-      redirect url('/order/'+@product_id)
-
-    end
-    redirect url(:personal, :index)
+    redirect url('/')
   end
 
   get :out do
-    destroy_current_user
-    redirect url(:login, :index)
+    destroy_current_admin
+    redirect url('/')
   end
 
   get :term do

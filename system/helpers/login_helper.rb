@@ -3,9 +3,18 @@
 module Myblog
   class System
     module LoginHelper
-      # def simple_helper_method
-      # ...
-      # end
+      def current_admin
+        session[:admin]
+
+      end
+
+      def set_current_admin(admin)
+        session[:admin] = admin
+      end
+
+      def destroy_current_admin
+        session[:admin] = nil
+      end
     end
 
     helpers LoginHelper

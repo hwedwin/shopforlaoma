@@ -131,10 +131,24 @@
 		    消息
 				<div class="ui teal label">4</div>
 		  </a>
-	    <a class="ui item dropdown">
-	      管理员
-				<i class="dropdown icon"></i>
-	    </a>
+			<a class="ui item dropdown">
+			  管理员
+			    <i class="dropdown icon"></i>
+			    <div class="menu">
+			      <div onclick="location.assign('/system/login/out')" class="item" data-value="drop">
+							退出
+						</div>
+
+			    </div>
+			</a>
+			<script type="text/javascript">
+			$('.dropdown')
+				.dropdown({
+					// you can use any ui transition
+					transition: 'drop'
+				})
+				;
+			</script>
 	  </div>
 	</div>
 	<br><br>
