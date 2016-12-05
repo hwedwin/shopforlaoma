@@ -38,7 +38,7 @@ Myblog::System.controllers :login do
     @admin = User.where(mobile: params[:mobile]).first
     if @admin
       if session[:valid]==params[:smstext]
-          if @admin.is_seller 
+          if @admin.is_seller or @admin.is_super
             set_current_admin(@admin)
           else
             @message = '您没有权限访问系统'
