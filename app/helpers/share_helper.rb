@@ -35,7 +35,18 @@ module Myblog
       end#def
 
       def generate_root
-        @root_user = User.where(mobile: "18820965455").first
+        if  User.where(mobile: "18820965455").exists?
+          @root_user = User.where(mobile: "18820965455").first
+        else
+          @root_user = User.new
+          @root_user.username = "simontao"
+          @root_user.password = Time.now.to_s
+          @root_user.email = 'xsqfeaher@gmail.com'
+          @root_user.mobile= '18820965455'
+          @root_user.save
+
+        end
+
 
         if UserNode.where(user: @root_user).exists?
           @user_node  = UserNode.where(user: @root_user).first

@@ -52,9 +52,8 @@ Myblog::System.controllers :login do
       end
 
     else
-        @message = '验证码错误！'
-        render 'login/index'
-        return nil
+        @message = '用户不存在！'
+        redirect url(:login, :index), :error => @message.html_safe+'<i class="close icon"></i>'.html_safe
     end
 
     redirect url('/')

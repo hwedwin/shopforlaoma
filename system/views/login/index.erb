@@ -203,6 +203,17 @@
 							</p>
 						</div>
 			<?php endif; ?> -->
+			<%= flash_tag(:error, :class => 'ui error message transition', :id => 'flash-notice') %>
+			<script type="text/javascript">
+			$('#flash-notice')
+					.on('click', function() {
+						$(this)
+							.closest('.message')
+							.transition('fade')
+						;
+					})
+					;
+			</script>
 			<% form_tag url(:login, :index), :class=>"ui large form" do %>
 			<div class="ui stacked ">
 

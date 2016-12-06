@@ -48,8 +48,7 @@ Myblog::App.controllers :login do
         set_current_user(@user)
       else
         @message = '验证码错误！'
-        render 'login/index'
-        return nil
+        redirect url(:login, :index), :error => @message.html_safe+'<i class="close icon"></i>'.html_safe
       end
 
     end
