@@ -15,48 +15,115 @@
     <div class="ui huge header">
       订单管理
     </div>
-    <form class="" action="/webadmin/order/deleteorders" method="post">
+    <form class="" action="/webadmin/order/deleteorderss" method="post">
       <div class="ui buttons">
-        <a href="/system/orders/new" class="ui green basic button">增加</a>
+        <!-- <a href="/system/orders/new" class="ui green basic button">增加</a> -->
         <button type="submit" class="ui basic red button">批量删除</button>
         <input type="hidden" name="ids" value="" id="orders_delete">
       </div>
     </form>
   </div>
-  <div class="ui segment">
-    <table class="ui celled table">
+  <div class="ui load segment">
+    <div class="ui dimmer">
+    <div class="content">
+      <div class="center">
+        <h2 class="ui inverted icon header">
+          <i class="progress icon"></i>
+          <span id="loadMessage">正在保存更改......<span>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="ui container">
+
+
+    <table class="ui twelve column celled table">
       <thead>
-        <tr><th width="100">
+        <tr>
+        <th>
           全选／反选 <br>
           <div class="ui master checkbox">
             <input type="checkbox">
             <label for=""></label>
           </div>
         </th>
-        <th>名称</th>
-        <th>上级</th>
-        <th>操作</th>
+        <th>编号</th>
+        <th>负责的销售人员电话</th>
+        <th>负责的销售人员昵称</th>
+        <th>负责的销售人员姓名</th>
+        <th>购买的商品</th>
+        <th>下单时间</th>
+        <th>订单状态</th>
+        <th>客户电话</th>
+        <th>状态更新时间</th>
+        <th>交易成交总额</th>
       </tr></thead>
       <tbody>
         <% if @orders.length > 0 and @orders %>
         <% @orders.each do |order| %>
         <tr>
-          <td>
+          <td style="word-break:break-all;">
             <div class="ui child checkbox" orderid="<%= order.id %>">
               <input type="checkbox" tabindex="0">
               <label for=""></label>
             </div>
           </td>
-          <td><%= order.name %> || <%= order.id %></td>
-          <td>
-            <%=order.order.name if order.order %>
+          <td style="word-break:break-all;"><%= order.id %></td>
+          <% @seller = User.find(order.seller) %>
+          <td style="word-break:break-all;"><%= @seller.mobile %></td>
+          <td style="word-break:break-all;"><%= @seller.fake_name %></td>
+          <td style="word-break:break-all;"><%= @seller.real_name %></td>
+          <td style="word-break:break-all;">
+            <ul>
+              <% order.order_products.each do |order_product| %>
+                <li><a href="/products/<%= order_product.product.id %>">
+                <%= order_product.product.product_model_type %></a>　&times;
+                 <%= order_product.counter %></li>
+              <% end %>
+            </ul>
           </td>
-          <td>
-            <div class="ui">
-              <?php echo Html::anchor('/webadmin/order/edit/'.$item->id, '<i class="edit icon"></i> 编辑', array('class' => 'ui labeled icon button')); ?><br/>
-  						<?php echo Html::anchor('/webadmin/order/delete/'.$item->id, '<i class="remove icon"></i> 删除', array('class' => 'ui labeled icon button', 'onclick' => "return confirm('是否确认删除?')")); ?>
-            </div>
+          <td style="word-break:break-all;"><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <td style="width:200px;">
+            <select  id="status<%=order.id.to_s %>" name="skills" class="ui fluid dropdown">
+              <option value="<%= order.status %>"><%= order.status %></option>
+              <option value="已电话沟通">已电话沟通</option>
+              <option value="正在进行中">正在进行中</option>
+              <option value="已确认购买意向">已确认购买意向</option>
+              <option value="未达成购买意向">未达成购买意向</option>
+              <option value="未付款">未付款</option>
+              <option value="已付款">已付款</option>
+              <option value="已完成">已完成</option>
+            </select>
+
+              <script type="text/javascript">
+        			$("#status<%=order.id.to_s %>").dropdown({
+                  onChange: function(value, text, $selectedItem) {
+                    $('.ui.load.segment').dimmer('show');
+                    $.get('/system/orders/change_state/'+'<%=order.id.to_s %>', {state: value}, function(result){
+                      $selectedItem.val(result);
+                      $('.ui.load.segment').dimmer('hide');
+                    });
+                  }
+        				});
+        			</script>
           </td>
+          <td style="word-break:break-all;"><%= order.user.mobile %></td>
+          <td style="word-break:break-all;">
+            <%= order.updated_at.strftime("%Y-%m-%d %H:%M:%S") %>
+          </td>
+          <td style="word-break:break-all;">
+            <form class="ui form">
+              <input id="amount<%=order.id%>" type="text" placeholder="<%= order.amount %>"/>
+              <button id="changeAmount<%=order.id%>" type="button" class="ui tiny button" name="button">保存</button>
+            </form>
+            <script type="text/javascript">
+              $("#changeAmount<%=order.id%>").click(function(){
+                console.log(  $("#amount<%=order.id%>").val());
+              });
+            </script>
+
+          </td>
+
         </tr>
         <% end %>
         <% else %>
@@ -69,6 +136,7 @@
         </th>
       </tr></tfoot>
     </table>
+    </div>
   </div>
 </div>
 <script type="text/javascript">
@@ -109,5 +177,40 @@ $('.child.checkbox').each(function(){
         }
       }
     });
+});
+
+$("#checkSeller").checkbox({
+  onChecked: function() {
+    console.log('checked');
+    $('.ui.load.segment').dimmer('show');
+    $('#loadMessage').html("正在保存更改......");
+    var order_id = $("#checkSeller").attr("data-id");
+    $.get('/system/orders/enable_seller/'+order_id, function(result){
+      if (result == '1') {
+        $('#loadMessage').html("更改成功！");
+        $('.ui.load.segment').dimmer('hide');
+      }
+      if (result == '0') {
+        $('#loadMessage').html("更改失败，请检查网络");
+        $('.ui.load.segment').dimmer('hide');
+      }
+    });
+  },
+  onUnchecked: function() {
+    console.log('unchecked');
+  $('.ui.load.segment').dimmer('show');
+  $('#loadMessage').html("正在保存更改......");
+  var order_id = $("#checkSeller").attr("data-id");
+  $.get('/system/orders/disable_seller/'+order_id, function(result){
+    if (result == '1') {
+      $('#loadMessage').html("更改成功！");
+      $('.ui.load.segment').dimmer('hide');
+    }
+    if (result == '0') {
+      $('#loadMessage').html("更改失败，请检查网络");
+      $('.ui.load.segment').dimmer('hide');
+    }
+  });
+  }
 });
 </script>

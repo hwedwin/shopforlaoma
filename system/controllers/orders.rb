@@ -1,5 +1,5 @@
 Myblog::System.controllers :orders do
-  
+
   # get :index, :map => '/foo/bar' do
   #   session[:foo] = 'bar'
   #   render 'index'
@@ -18,16 +18,23 @@ Myblog::System.controllers :orders do
   # get '/example' do
   #   'Hello world!'
   # end
-  
+
   get :index do
-
+    @orders = Order.all
+    render 'orders/index'
   end
 
-  get :edit do
-
+  get :change_state, :with => :id do
+    @order = Order.find(params[:id])
+    @order.status = params[:state]
+    if @order.update
+      @order.status
+    else
+      0
+    end
   end
 
-  post :update do
+  get :change_settlement_money do
 
   end
 

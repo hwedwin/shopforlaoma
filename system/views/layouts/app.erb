@@ -31,9 +31,9 @@
   <!-- Tile icon for Win8 (144x144 + tile color) -->
   <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
   <meta name="msapplication-TileColor" content="#0e90d2">
-	<link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet">
-	<script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.js"></script>
+	<link href="https://cdn.staticfile.org/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet">
+	<script src="https://cdn.staticfile.org/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/semantic-ui/2.2.6/semantic.min.js"></script>
   <%= javascript_include_tag 'enquire.min' %>
   <script>
     $(document).ready(function(){
@@ -91,14 +91,23 @@
 		<a href="/webadmin/" class="active item">
 			首页
 		</a>
-		<a class="item">
+		<!-- <a class="item">
 			消息中心<div class="ui teal label">4</div>
 		</a>
 		<a class="item">
 			文章管理
-		</a>
-		<a class="item">
+		</a> -->
+		<!-- <a class="item">
 			门店管理
+		</a> -->
+		<a href="/system/categories/" class="item">
+			商品分类管理
+		</a>
+		<a href="/system/products/" class="item">
+			商品管理
+		</a>
+		<a href="/system/orders/" class="item">
+			订单管理
 		</a>
 		<a class="item">
 			图片管理
@@ -106,15 +115,15 @@
 		<a class="item">
 			用户管理
 		</a>
-		<a class="item">
+		<!-- <a class="item">
 			留言管理
-		</a>
-		<a href="/webadmin/admin" class="item">
+		</a> -->
+		<!-- <a href="/webadmin/admin" class="item">
 			管理系统用户
 		</a>
 		<a href="/webadmin/role" class="item">
 			角色及权限管理
-		</a>
+		</a> -->
 	</div>
 
 <div class="ui inverted segment pusher"  id="mainPage" style="position:relative;top:-20px;min-height:1000px;height:auto;">
@@ -165,23 +174,26 @@
 					<a href="/webadmin/" class="<?php echo isset($IndexisActived)? $IndexisActived : ''; ?> item">
 						首页
 					</a>
-					<a class="item">
+					<!-- <a class="item">
 						消息中心<div class="ui teal label">4</div>
-					</a>
-					<a class="item">
+					</a> -->
+					<!-- <a class="item">
 						文章管理
-					</a>
+					</a> -->
 					<a href="/system/pictures/" class="item">
 						图片管理
 					</a>
-					<a class="item">
+					<!-- <a class="item">
 						门店管理
-					</a>
-					<a class="item">
+					</a> -->
+					<!-- <a class="item">
 						留言管理
-					</a>
+					</a> -->
 					<a href="/system/categories/" class="item">
 						商品分类管理
+					</a>
+					<a href="/system/orders/" class="item">
+						订单管理
 					</a>
 					<a href="/system/products/" class="item">
 						商品管理
@@ -189,12 +201,12 @@
 					<a  href="/system/users/" class="item">
 						用户管理
 					</a>
-					<a href="/webadmin/admin" class="item">
+					<!-- <a href="/webadmin/admin" class="item">
 						管理系统用户
 					</a>
 					<a href="/system/roles" class="item">
 						角色及权限管理
-					</a>
+					</a> -->
 
 				</div>
 			</div>

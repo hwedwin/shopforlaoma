@@ -91,9 +91,7 @@
           <div class="column" style="word-break:break-all;">
             编号：<%= order.id %>
           </div>
-          <div class="column"  style="word-break:break-all;">
-              销售电话：<%= User.find(order.seller).mobile %>
-          </div>
+
           <div class="column"  style="word-break:break-all;">
             商品：
             <ul>
@@ -110,6 +108,9 @@
           </div>
           <div class="column">
               状态：<%= order.status %>
+              <% if order.status == "正在进行中" %>
+                ——请耐心等待我们与您联系
+              <% end %>
           </div>
           <div class="column">
               状态更新：<%= order.updated_at.strftime("%Y-%m-%d %H:%M:%S") %>
