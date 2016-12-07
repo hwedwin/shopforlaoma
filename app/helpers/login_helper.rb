@@ -17,6 +17,7 @@ module Myblog
 
       def destroy_current_user
         session[:user] = nil
+        session.clear
       end
 
     end
