@@ -31,9 +31,9 @@
   <!-- Tile icon for Win8 (144x144 + tile color) -->
   <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
   <meta name="msapplication-TileColor" content="#0e90d2">
-	<link href="https://cdn.staticfile.org/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet">
-	<script src="https://cdn.staticfile.org/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://cdn.staticfile.org/semantic-ui/2.2.6/semantic.min.js"></script>
+	<%= stylesheet_link_tag 'semantic.min' %>
+	<%= javascript_include_tag 'jquery.min' %>
+  <%= javascript_include_tag 'semantic.min' %>
   <%= javascript_include_tag 'enquire.min' %>
   <script>
     $(document).ready(function(){

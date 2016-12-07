@@ -77,11 +77,47 @@
           <td style="word-break:break-all;"><%= user.fake_name %></td>
           <td style="word-break:break-all;">
             <div class="ui left floated compact segment">
-              <div data-id='<%= user.id %>' class="ui fitted checkbox" id="checkSeller">
+              <div data-id='<%= user.id %>' class="ui fitted checkbox" id="checkSeller<%=user.id %>">
                 <input type="checkbox" <%= user.is_seller ? 'checked="checked"' : "" %>>
                 <label></label>
               </div>
             </div>
+            <script>
+            $("#checkSeller<%=user.id %>").checkbox({
+              onChecked: function() {
+                console.log('checked');
+                $('.ui.load.segment').dimmer('show');
+                $('#loadMessage').html("正在保存更改......");
+                var user_id = $("#checkSeller").attr("data-id");
+                $.get('/system/users/enable_seller/'+user_id, function(result){
+                  if (result == '1') {
+                    $('#loadMessage').html("更改成功！");
+                    $('.ui.load.segment').dimmer('hide');
+                  }
+                  if (result == '0') {
+                    $('#loadMessage').html("更改失败，请检查网络");
+                    $('.ui.load.segment').dimmer('hide');
+                  }
+                });
+              },
+              onUnchecked: function() {
+                console.log('unchecked');
+              $('.ui.load.segment').dimmer('show');
+              $('#loadMessage').html("正在保存更改......");
+              var user_id = $("#checkSeller").attr("data-id");
+              $.get('/system/users/disable_seller/'+user_id, function(result){
+                if (result == '1') {
+                  $('#loadMessage').html("更改成功！");
+                  $('.ui.load.segment').dimmer('hide');
+                }
+                if (result == '0') {
+                  $('#loadMessage').html("更改失败，请检查网络");
+                  $('.ui.load.segment').dimmer('hide');
+                }
+              });
+              }
+            });
+            </script>
           </td>
           <td><div class="ui left floated compact segment">
             <div class="ui fitted checkbox" id="checkSuper">
@@ -147,38 +183,5 @@ $('.child.checkbox').each(function(){
     });
 });
 
-$("#checkSeller").checkbox({
-  onChecked: function() {
-    console.log('checked');
-    $('.ui.load.segment').dimmer('show');
-    $('#loadMessage').html("正在保存更改......");
-    var user_id = $("#checkSeller").attr("data-id");
-    $.get('/system/users/enable_seller/'+user_id, function(result){
-      if (result == '1') {
-        $('#loadMessage').html("更改成功！");
-        $('.ui.load.segment').dimmer('hide');
-      }
-      if (result == '0') {
-        $('#loadMessage').html("更改失败，请检查网络");
-        $('.ui.load.segment').dimmer('hide');
-      }
-    });
-  },
-  onUnchecked: function() {
-    console.log('unchecked');
-  $('.ui.load.segment').dimmer('show');
-  $('#loadMessage').html("正在保存更改......");
-  var user_id = $("#checkSeller").attr("data-id");
-  $.get('/system/users/disable_seller/'+user_id, function(result){
-    if (result == '1') {
-      $('#loadMessage').html("更改成功！");
-      $('.ui.load.segment').dimmer('hide');
-    }
-    if (result == '0') {
-      $('#loadMessage').html("更改失败，请检查网络");
-      $('.ui.load.segment').dimmer('hide');
-    }
-  });
-  }
-});
+
 </script>
