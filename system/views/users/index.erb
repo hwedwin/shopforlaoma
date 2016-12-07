@@ -88,8 +88,8 @@
                 console.log('checked');
                 $('.ui.load.segment').dimmer('show');
                 $('#loadMessage').html("正在保存更改......");
-                var user_id = $("#checkSeller").attr("data-id");
-                $.get('/system/users/enable_seller/'+user_id, function(result){
+                var user_id = $("#checkSeller<%=user.id %>").attr("data-id");
+                $.get('/system/users/enable_seller/<%=user.id%>', function(result){
                   if (result == '1') {
                     $('#loadMessage').html("更改成功！");
                     $('.ui.load.segment').dimmer('hide');
@@ -104,8 +104,8 @@
                 console.log('unchecked');
               $('.ui.load.segment').dimmer('show');
               $('#loadMessage').html("正在保存更改......");
-              var user_id = $("#checkSeller").attr("data-id");
-              $.get('/system/users/disable_seller/'+user_id, function(result){
+              var user_id = $("#checkSeller<%=user.id %>").attr("data-id");
+              $.get('/system/users/disable_seller/<%=user.id %>', function(result){
                 if (result == '1') {
                   $('#loadMessage').html("更改成功！");
                   $('.ui.load.segment').dimmer('hide');
