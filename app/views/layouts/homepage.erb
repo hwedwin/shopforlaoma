@@ -35,7 +35,7 @@
   <!-- Tile icon for Win8 (144x144 + tile color) -->
   <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
   <meta name="msapplication-TileColor" content="#0e90d2">
-  <link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet">
+  <%= stylesheet_link_tag 'semantic.min' %>
   <div id='wx_pic' style='margin:0 auto;display:none;'>
     <% if @product %>
     <%= image_tag Picture.find(@product.cover).image.url, class: "image", width: "100%" %>
@@ -132,8 +132,8 @@
 
   </style>
 
-  <script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.js"></script>
+  <%= javascript_include_tag 'jquery.min' %>
+  <%= javascript_include_tag 'semantic.min' %>
   <script>
   $(document)
     .ready(function() {
